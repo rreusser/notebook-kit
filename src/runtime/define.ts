@@ -5,9 +5,9 @@ import {main} from "./index.js";
 import {input} from "./stdlib/generators/index.js";
 import {Mutator} from "./stdlib/mutable.js";
 
-type DefineState = DisplayState & {variables: Variable[]};
+export type DefineState = DisplayState & {variables: Variable[]};
 
-type Definition = {
+export type Definition = {
   id: number;
   body: VariableDefinition;
   inputs?: string[];
