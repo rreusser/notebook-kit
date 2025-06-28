@@ -1,7 +1,6 @@
 {
   "name": "@observablehq/notebook-kit",
   "license": "ISC",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/observablehq/notebook-kit.git"
@@ -14,7 +13,7 @@
   "type": "module",
   "scripts": {
     "test": "vitest",
-    "build": "rm -rf dist && tsc && chmod +x dist/bin/*.js && cp -r src/styles src/templates dist/src && cp src/runtime/stdlib/*.css dist/src/runtime/stdlib",
+    "prepublishOnly": "rm -rf dist && tsc && chmod +x dist/bin/*.js && cp -r src/styles src/templates dist/src && cp src/runtime/stdlib/*.css dist/src/runtime/stdlib",
     "lint": "tsc --noEmit && eslint bin src types",
     "notebooks": "tsx bin/notebooks.ts",
     "download": "tsx bin/notebooks.ts download",
