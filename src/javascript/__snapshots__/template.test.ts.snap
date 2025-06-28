@@ -1,0 +1,134 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`parses a simple template 1`] = `
+Node {
+  "end": 13,
+  "expressions": [],
+  "quasis": [
+    Node {
+      "end": 13,
+      "start": 0,
+      "tail": true,
+      "type": "TemplateElement",
+      "value": {
+        "cooked": null,
+        "raw": "Hello, world!",
+      },
+    },
+  ],
+  "start": 0,
+  "type": "TemplateLiteral",
+}
+`;
+
+exports[`parses a template with an interpolated expression 1`] = `
+Node {
+  "end": 18,
+  "expressions": [
+    Node {
+      "end": 16,
+      "raw": ""world"",
+      "start": 9,
+      "type": "Literal",
+      "value": "world",
+    },
+  ],
+  "quasis": [
+    Node {
+      "end": 7,
+      "start": 0,
+      "tail": false,
+      "type": "TemplateElement",
+      "value": {
+        "cooked": null,
+        "raw": "Hello, ",
+      },
+    },
+    Node {
+      "end": 18,
+      "start": 17,
+      "tail": true,
+      "type": "TemplateElement",
+      "value": {
+        "cooked": null,
+        "raw": "!",
+      },
+    },
+  ],
+  "start": 0,
+  "type": "TemplateLiteral",
+}
+`;
+
+exports[`parses a template with backquotes 1`] = `
+Node {
+  "end": 15,
+  "expressions": [],
+  "quasis": [
+    Node {
+      "end": 15,
+      "start": 0,
+      "tail": true,
+      "type": "TemplateElement",
+      "value": {
+        "cooked": null,
+        "raw": "Hello, \`world\`!",
+      },
+    },
+  ],
+  "start": 0,
+  "type": "TemplateLiteral",
+}
+`;
+
+exports[`parses a template with backslashes 1`] = `
+Node {
+  "end": 15,
+  "expressions": [],
+  "quasis": [
+    Node {
+      "end": 15,
+      "start": 0,
+      "tail": true,
+      "type": "TemplateElement",
+      "value": {
+        "cooked": null,
+        "raw": "Hello, \\world\\!",
+      },
+    },
+  ],
+  "start": 0,
+  "type": "TemplateLiteral",
+}
+`;
+
+exports[`parses an empty template 1`] = `
+Node {
+  "end": 0,
+  "expressions": [],
+  "quasis": [
+    Node {
+      "end": 0,
+      "start": 0,
+      "tail": true,
+      "type": "TemplateElement",
+      "value": {
+        "cooked": "",
+        "raw": "",
+      },
+    },
+  ],
+  "start": 0,
+  "type": "TemplateLiteral",
+}
+`;
+
+exports[`transpiles a simple template 1`] = `"\`Hello, world!\`"`;
+
+exports[`transpiles a template with an interpolated expression 1`] = `"\`Hello, \${"world"}!\`"`;
+
+exports[`transpiles a template with backquotes 1`] = `"\`Hello, \\\`world\\\`!\`"`;
+
+exports[`transpiles a template with backslashes 1`] = `"\`Hello, \\\\world\\\\!\`"`;
+
+exports[`transpiles an empty template 1`] = `""`;

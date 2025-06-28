@@ -1,0 +1,186 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`finds top-level awaits 1`] = `
+[
+  Node {
+    "argument": Node {
+      "end": 7,
+      "raw": "1",
+      "start": 6,
+      "type": "Literal",
+      "value": 1,
+    },
+    "end": 7,
+    "start": 0,
+    "type": "AwaitExpression",
+  },
+]
+`;
+
+exports[`finds top-level awaits 2`] = `
+[
+  Node {
+    "argument": Node {
+      "end": 11,
+      "raw": "2",
+      "start": 10,
+      "type": "Literal",
+      "value": 2,
+    },
+    "end": 11,
+    "start": 4,
+    "type": "AwaitExpression",
+  },
+]
+`;
+
+exports[`finds top-level awaits 3`] = `
+[
+  Node {
+    "argument": Node {
+      "end": 11,
+      "raw": "2",
+      "start": 10,
+      "type": "Literal",
+      "value": 2,
+    },
+    "end": 11,
+    "start": 4,
+    "type": "AwaitExpression",
+  },
+]
+`;
+
+exports[`finds top-level awaits 4`] = `
+[
+  Node {
+    "argument": Node {
+      "end": 19,
+      "raw": "3",
+      "start": 18,
+      "type": "Literal",
+      "value": 3,
+    },
+    "end": 19,
+    "start": 12,
+    "type": "AwaitExpression",
+  },
+]
+`;
+
+exports[`finds top-level awaits 5`] = `
+[
+  Node {
+    "await": true,
+    "body": Node {
+      "end": 26,
+      "start": 25,
+      "type": "EmptyStatement",
+    },
+    "end": 26,
+    "left": Node {
+      "declarations": [
+        Node {
+          "end": 18,
+          "id": Node {
+            "end": 18,
+            "name": "f",
+            "start": 17,
+            "type": "Identifier",
+          },
+          "init": null,
+          "start": 17,
+          "type": "VariableDeclarator",
+        },
+      ],
+      "end": 18,
+      "kind": "const",
+      "start": 11,
+      "type": "VariableDeclaration",
+    },
+    "right": Node {
+      "elements": [],
+      "end": 24,
+      "start": 22,
+      "type": "ArrayExpression",
+    },
+    "start": 0,
+    "type": "ForOfStatement",
+  },
+]
+`;
+
+exports[`finds top-level awaits 6`] = `
+[
+  Node {
+    "argument": Node {
+      "elements": [],
+      "end": 24,
+      "start": 22,
+      "type": "ArrayExpression",
+    },
+    "end": 24,
+    "start": 16,
+    "type": "AwaitExpression",
+  },
+]
+`;
+
+exports[`finds top-level awaits 7`] = `
+[
+  Node {
+    "argument": Node {
+      "end": 24,
+      "name": "f",
+      "start": 23,
+      "type": "Identifier",
+    },
+    "end": 24,
+    "start": 17,
+    "type": "AwaitExpression",
+  },
+  Node {
+    "argument": Node {
+      "elements": [],
+      "end": 41,
+      "start": 39,
+      "type": "ArrayExpression",
+    },
+    "end": 41,
+    "start": 33,
+    "type": "AwaitExpression",
+  },
+]
+`;
+
+exports[`finds top-level awaits 8`] = `
+[
+  Node {
+    "argument": Node {
+      "end": 27,
+      "name": "f",
+      "start": 26,
+      "type": "Identifier",
+    },
+    "end": 27,
+    "start": 20,
+    "type": "AwaitExpression",
+  },
+]
+`;
+
+exports[`finds top-level awaits 9`] = `
+[
+  Node {
+    "argument": Node {
+      "end": 24,
+      "properties": [],
+      "start": 22,
+      "type": "ObjectExpression",
+    },
+    "end": 24,
+    "start": 16,
+    "type": "AwaitExpression",
+  },
+]
+`;

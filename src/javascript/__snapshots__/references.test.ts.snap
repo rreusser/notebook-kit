@@ -1,0 +1,158 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`destructured rest variables can mask references 1`] = `
+[
+  Node {
+    "end": 32,
+    "name": "bar",
+    "start": 29,
+    "type": "Identifier",
+  },
+]
+`;
+
+exports[`destructured variables can mask references 1`] = `
+[
+  Node {
+    "end": 29,
+    "name": "bar",
+    "start": 26,
+    "type": "Identifier",
+  },
+]
+`;
+
+exports[`doesn’t consider the identifier a reference 1`] = `
+[
+  Node {
+    "end": 27,
+    "name": "bar",
+    "start": 24,
+    "type": "Identifier",
+  },
+]
+`;
+
+exports[`finds multiple references 1`] = `
+[
+  Node {
+    "end": 11,
+    "name": "b",
+    "start": 10,
+    "type": "Identifier",
+  },
+  Node {
+    "end": 15,
+    "name": "c",
+    "start": 14,
+    "type": "Identifier",
+  },
+  Node {
+    "end": 28,
+    "name": "c",
+    "start": 27,
+    "type": "Identifier",
+  },
+  Node {
+    "end": 32,
+    "name": "b",
+    "start": 31,
+    "type": "Identifier",
+  },
+]
+`;
+
+exports[`finds references in expressions 1`] = `
+[
+  Node {
+    "end": 3,
+    "name": "foo",
+    "start": 0,
+    "type": "Identifier",
+  },
+  Node {
+    "end": 9,
+    "name": "bar",
+    "start": 6,
+    "type": "Identifier",
+  },
+]
+`;
+
+exports[`finds references in statements 1`] = `
+[
+  Node {
+    "end": 3,
+    "name": "foo",
+    "start": 0,
+    "type": "Identifier",
+  },
+  Node {
+    "end": 9,
+    "name": "bar",
+    "start": 6,
+    "type": "Identifier",
+  },
+]
+`;
+
+exports[`function parameters can mask references 1`] = `
+[
+  Node {
+    "end": 16,
+    "name": "bar",
+    "start": 13,
+    "type": "Identifier",
+  },
+]
+`;
+
+exports[`function rest parameters can mask references 1`] = `
+[
+  Node {
+    "end": 21,
+    "name": "bar",
+    "start": 18,
+    "type": "Identifier",
+  },
+]
+`;
+
+exports[`ignores globals 1`] = `
+[
+  Node {
+    "end": 12,
+    "name": "bar",
+    "start": 9,
+    "type": "Identifier",
+  },
+]
+`;
+
+exports[`local variables can mask references 1`] = `
+[
+  Node {
+    "end": 20,
+    "name": "bar",
+    "start": 17,
+    "type": "Identifier",
+  },
+]
+`;
+
+exports[`local variables can not mask references 1`] = `
+[
+  Node {
+    "end": 5,
+    "name": "foo",
+    "start": 2,
+    "type": "Identifier",
+  },
+  Node {
+    "end": 11,
+    "name": "bar",
+    "start": 8,
+    "type": "Identifier",
+  },
+]
+`;

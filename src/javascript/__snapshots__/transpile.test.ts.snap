@@ -1,0 +1,225 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`transpiles JavaScript expressions 1`] = `
+{
+  "autodisplay": true,
+  "body": "() => {
+return (
+1 + 2
+)
+}",
+  "inputs": [],
+  "outputs": [],
+}
+`;
+
+exports[`transpiles JavaScript expressions 2`] = `
+{
+  "autodisplay": true,
+  "body": "(x,y) => {
+return (
+x + y
+)
+}",
+  "inputs": [
+    "x",
+    "y",
+  ],
+  "outputs": [],
+}
+`;
+
+exports[`transpiles JavaScript expressions 3`] = `
+{
+  "autodisplay": true,
+  "body": "async (z) => {
+return (
+await z
+)
+}",
+  "inputs": [
+    "z",
+  ],
+  "outputs": [],
+}
+`;
+
+exports[`transpiles JavaScript expressions 4`] = `
+{
+  "autodisplay": false,
+  "body": "(display) => {
+return (
+display(1), display(2)
+)
+}",
+  "inputs": [
+    "display",
+  ],
+  "outputs": [],
+}
+`;
+
+exports[`transpiles JavaScript programs 1`] = `
+{
+  "autodisplay": false,
+  "body": "() => {
+const x = 1, y = 2;
+return {x,y};
+}",
+  "inputs": [],
+  "outputs": [
+    "x",
+    "y",
+  ],
+}
+`;
+
+exports[`transpiles JavaScript programs 2`] = `
+{
+  "autodisplay": false,
+  "body": "(x,y) => {
+x + y;
+}",
+  "inputs": [
+    "x",
+    "y",
+  ],
+  "outputs": [],
+}
+`;
+
+exports[`transpiles JavaScript programs 3`] = `
+{
+  "autodisplay": false,
+  "body": "async (z) => {
+await z;
+}",
+  "inputs": [
+    "z",
+  ],
+  "outputs": [],
+}
+`;
+
+exports[`transpiles dynamic npm: imports 1`] = `
+{
+  "autodisplay": false,
+  "body": "async () => {
+const d3 = await import("https://cdn.jsdelivr.net/npm/d3/+esm");
+return {d3};
+}",
+  "inputs": [],
+  "outputs": [
+    "d3",
+  ],
+}
+`;
+
+exports[`transpiles import.meta.resolve 1`] = `
+{
+  "autodisplay": true,
+  "body": "() => {
+return (
+"https://cdn.jsdelivr.net/npm/d3/+esm"
+)
+}",
+  "inputs": [],
+  "outputs": [],
+}
+`;
+
+exports[`transpiles import.meta.resolve 2`] = `
+{
+  "autodisplay": true,
+  "body": "() => {
+return (
+new URL("./test", document.baseURI).href
+)
+}",
+  "inputs": [],
+  "outputs": [],
+}
+`;
+
+exports[`transpiles import.meta.resolve 3`] = `
+{
+  "autodisplay": true,
+  "body": "() => {
+return (
+"./test"
+)
+}",
+  "inputs": [],
+  "outputs": [],
+}
+`;
+
+exports[`transpiles static npm: imports 1`] = `
+{
+  "autodisplay": false,
+  "body": "async () => {
+const d3 = await import("https://cdn.jsdelivr.net/npm/d3/+esm");
+
+return {d3};
+}",
+  "inputs": [],
+  "outputs": [
+    "d3",
+  ],
+}
+`;
+
+exports[`transpiles static npm: imports 2`] = `
+{
+  "autodisplay": false,
+  "body": "async () => {
+const {default: _} = await import("https://cdn.jsdelivr.net/npm/lodash/+esm").then((module) => {
+  if (!("default" in module)) throw new SyntaxError(\`export 'default' not found\`);
+  return module;
+});
+
+return {_};
+}",
+  "inputs": [],
+  "outputs": [
+    "_",
+  ],
+}
+`;
+
+exports[`transpiles static npm: imports 3`] = `
+{
+  "autodisplay": false,
+  "body": "async () => {
+const [{}, {}] = await Promise.all([import("https://cdn.jsdelivr.net/npm/d3/+esm"), import("https://cdn.jsdelivr.net/npm/isoformat/+esm")]);
+
+}",
+  "inputs": [],
+  "outputs": [],
+}
+`;
+
+exports[`transpiles static observable: imports 1`] = `
+{
+  "autodisplay": false,
+  "body": "async (__ojs_runtime,__ojs_observer) => {
+const {Scrubber} = await (import("https://api.observablehq.com/@mbostock/scrubber.js?v=4").then((_) => {
+  const observers = {};
+  const module = __ojs_runtime.module(_.default);
+  const main = __ojs_runtime.module();
+  if (!module.defines("Scrubber")) throw new SyntaxError(\`export 'Scrubber' not found\`);
+  main.variable(observers.Scrubber = __ojs_observer()).import("Scrubber", module);
+  return observers;
+}));
+
+return {Scrubber};
+}",
+  "inputs": [
+    "__ojs_runtime",
+    "__ojs_observer",
+  ],
+  "outputs": [
+    "Scrubber",
+  ],
+}
+`;
