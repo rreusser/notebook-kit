@@ -5,16 +5,27 @@ import {main} from "./index.js";
 import {input} from "./stdlib/generators/index.js";
 import {Mutator} from "./stdlib/mutable.js";
 
-export type DefineState = DisplayState & {variables: Variable[]};
+export type DefineState = DisplayState & {
+  /** the runtime variables associated with this cell */
+  variables: Variable[]
+};
 
 export type Definition = {
+  /** the unique cell id; a positive integer */
   id: number;
+  /** the cell’s definition function */
   body: VariableDefinition;
+  /** the names of this cell’s inputs (unbound references), if any */
   inputs?: string[];
+  /** the names of this cell’s outputs (top-level declarations), if any */
   outputs?: string[];
+  /** the singular output name of this cell, if any; an alternative to outputs */
   output?: string;
+  /** whether to display this cell’s singular output automatically */
   autodisplay?: boolean;
+  /** whether this cell’s singular output is a view */
   autoview?: boolean;
+  /** whether this cell’s singular output is a mutable */
   automutable?: boolean;
 };
 

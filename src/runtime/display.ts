@@ -1,7 +1,9 @@
 import {inspect, inspectError, getExpanded} from "./inspect.js";
 
 export type DisplayState = {
+  /** the HTML element in which to render this cell’s display */
   root: HTMLDivElement;
+  /** for inspected values, any expanded paths; see getExpanded */
   expanded: (number[][] | undefined)[];
 };
 
