@@ -1,8 +1,10 @@
 import {readFile} from "node:fs/promises";
 import {resolve} from "node:path";
 import {fileURLToPath} from "node:url";
+import type {TemplateLiteral} from "acorn";
 import {JSDOM} from "jsdom";
 import type {PluginOption} from "vite";
+import type {Cell} from "../lib/notebook.js";
 import {deserialize} from "../lib/serialize.js";
 import {Sourcemap} from "../javascript/sourcemap.js";
 import {transpile} from "../javascript/transpile.js";
@@ -32,6 +34,7 @@ export function observable({
         const notebook = deserialize(input, {parser});
         const tsource = await readFile(template, "utf-8");
         const document = parser.parseFromString(tsource, "text/html");
+        const statics = new Set<Cell>();
 
         const version = (await import("../../package.json", {with: {type: "json"}})).default.version;
         let generator = document.querySelector("meta[name=generator]");
@@ -46,20 +49,25 @@ export function observable({
         let cells = document.querySelector("main");
         cells ??= document.body.appendChild(document.createElement("main"));
         for (const cell of notebook.cells) {
+          const {id, mode, pinned, value} = cell;
           const div = cells.appendChild(document.createElement("div"));
-          div.id = `cell-${cell.id}`;
+          div.id = `cell-${id}`;
           div.className = "observablehq observablehq--cell";
-          if (cell.mode === "md") {
+          if (mode === "md") {
             md.document = document;
-            div.appendChild(md([stripExpressions(cell.value)]));
-          } else if (cell.mode === "html") {
-            div.innerHTML = stripExpressions(cell.value);
+            const template = parseTemplate(value);
+            if (!template.expressions.length) statics.add(cell);
+            div.appendChild(md([stripExpressions(template, value)]));
+          } else if (mode === "html") {
+            const template = parseTemplate(value);
+            if (!template.expressions.length) statics.add(cell);
+            div.innerHTML = stripExpressions(template, value);
           }
-          if (cell.pinned) {
+          if (pinned) {
             const pre = cells.appendChild(document.createElement("pre"));
             const code = pre.appendChild(document.createElement("code"));
-            code.className = `language-${cell.mode}`;
-            code.textContent = cell.value;
+            code.className = `language-${mode}`;
+            code.textContent = value;
             await highlight(code);
           }
         }
@@ -74,6 +82,7 @@ export function observable({
 </style><script type="module">
 import {define} from "observable:runtime/define";
 ${notebook.cells
+  .filter((cell) => !statics.has(cell))
   .map((cell) => {
     const transpiled = transpile(cell.value, cell.mode, {resolveFiles: true});
     return `
@@ -104,11 +113,10 @@ define(
   };
 }
 
-function stripExpressions(input: string): string {
+function stripExpressions(template: TemplateLiteral, input: string): string {
   const source = new Sourcemap(input);
-  const node = parseTemplate(input);
-  let index = node.start;
-  for (const q of node.quasis) {
+  let index = template.start;
+  for (const q of template.quasis) {
     if (q.start > index) source.replaceLeft(index, q.start, "…");
     index = q.end;
   }
