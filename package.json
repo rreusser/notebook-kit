@@ -18,7 +18,7 @@
     "notebooks": "tsx bin/notebooks.ts",
     "download": "tsx bin/notebooks.ts download",
     "docs:preview": "tsx bin/notebooks.ts preview --root docs --template docs/observable.tmpl",
-    "docs:build": "tsx bin/notebooks.ts build --root docs --template docs/observable.tmpl -- docs/*.html"
+    "docs:build": "tsx bin/notebooks.ts build --root docs --template docs/observable.tmpl -- docs/*.html docs/**/*.html"
   },
   "bin": {
     "notebooks": "dist/bin/notebooks.js"
