@@ -1,0 +1,274 @@
+<!doctype html>
+<notebook theme="slate">
+  <title>Observable Notebook Kit</title>
+  <script id="1" type="text/markdown">
+    # Observable Notebook Kit
+  </script>
+  <script id="4" type="text/markdown">
+    **Observable Notebook Kit** is an [open-source command-line tool](https://github.com/observablehq/notebook-kit) for building static sites from Observable Notebooks based on an open file format. Notebook Kit also includes a Vite plugin and a low-level JavaScript interface for deep integration of Observable Notebooks with custom web applications.
+  </script>
+  <script id="43" type="text/markdown">
+    Notebook Kit is available as part of [**Notebooks 2.0 Technology Preview**](./), which includes **Observable Desktop**, a notebook editor for macOS.
+  </script>
+  <script id="7" type="text/markdown">
+    ---
+
+    ## Installing
+
+    You can install Notebook Kit from [npm](https://www.npmjs.com/package/@observablehq/notebook-kit):
+
+    ```bash
+    npm install @observablehq/notebook-kit
+    ```
+
+    Notebook Kit requires [Node.js](https://nodejs.org/en) 20.19+ or 22.12+.
+  </script>
+  <script id="8" type="text/markdown">
+    ---
+
+    ## Command-line interface
+
+    Notebook Kit's CLI supports three commands: `preview` for a live preview of notebooks, `build` for building a static site, and `download` for downloading Observable Notebooks as HTML.
+  </script>
+  <script id="9" type="text/markdown">
+    ### Preview
+
+    To start the preview server, run the `preview` command. Use the `--root` argument to tell the preview server where the notebooks are located.
+
+    ```sh
+    notebooks preview --root docs
+    ```
+
+    If you'd like to use a custom page template, use the `--template` argument:
+
+    ```sh
+    notebooks preview --root docs --template docs/custom.tmpl
+    ```
+  </script>
+  <script id="10" type="text/markdown">
+    ### Build
+
+    To convert notebooks into a static site, run the `build` command. Use the `--root` argument to tell the command where the notebooks are located; you must also provide a list of notebook HTML files as positional arguments. By default, the site will be built in `.observablehq/dist` within the root.
+
+    ```sh
+    notebooks build --root docs -- docs/*.html
+    ```
+
+    Or, with a custom template:
+
+    ```sh
+    notebooks build --root docs --template docs/custom.tmpl -- docs/*.html
+    ```
+  </script>
+  <script id="5" type="text/markdown">
+    ### Download
+
+    To download and convert an existing Observable Notebook to a local HTML file, run the `download` command.
+
+    ```sh
+    notebooks download https://observablehq.com/@d3/bar-chart > docs/bar-chart.html
+    ```
+  </script>
+  <script id="6" type="text/markdown">
+    ---
+
+    ## JavaScript interface
+
+    For deeper integration of Observable Notebooks into custom web applications, we provide a [Vite](https://vite.dev) [plugin](https://vite.dev/guide/using-plugins.html) and a low-level JavaScript interface. For more, please browse the [TypeScript source](https://github.com/observablehq/notebook-kit), or [start a discussion](https://github.com/observablehq/notebook-kit/discussions) if you'd like help.
+  </script>
+  <script id="16" type="text/markdown">
+    ### Vite API
+
+    The Vite plugin is recommended for Vite-based applications.
+  </script>
+  <script id="42" type="text/markdown">
+    #### <code class="language-ts">observable({template?: string}): PluginOption</code>
+
+    Returns a Vite plugin for rendering notebook HTML as vanilla HTML. Markdown and HTML cells are rendered statically (without any interpolated dynamic values), and then, if needed, replaced with dynamic content when the page loads. Other cell modes are exclusively dynamic. Pinned cells display their source code statically rendered below any output. Supported languages are syntax-highlighted using Lezer.
+  </script>
+  <script id="41" type="text/markdown">
+    #### <code class="language-ts">config(): UserConfig</code>
+
+    Returns the base Vite config needed to use the `observable()` Vite plugin; this enables top-level await and adds resolvers for `npm:`, `jsr:`, and `observable:` import protocols.
+  </script>
+  <script id="17" type="text/markdown">
+    ### Build API
+
+    The Build API analyzes cell source code to find unbound references, such that the appropriate variable graph can be initialized using the [Observable Runtime](https://github.com/observablehq/runtime). For non-JavaScript cells (such as Markdown, HTML, and SQL), the Build API also transpiles the source into a tagged template literal expression.
+  </script>
+  <script id="18" type="text/markdown">
+    #### <code class="language-ts">maybeParseJavaScript(input: string): JavaScriptCell | undefined</code>
+
+    Parses the specified JavaScript cell source code, returning the resulting AST as either a `Program` or `Expression` node, along with any top-level variable `declarations` and unbound `references` to other variables. If the specified `input` has invalid syntax, returns `undefined`.
+  </script>
+  <script id="19" type="text/markdown">
+    #### <code class="language-ts">parseJavaScript(input: string): JavaScriptCell</code>
+
+    Parses the specified JavaScript cell source code, returning the resulting AST as either a `Program` or `Expression`, along with any top-level variable `declarations` and unbound `references` to other variables. (This method is called internally by `transpileJavaScript`.)
+  </script>
+  <script id="20" type="text/markdown">
+    #### <code class="language-ts">parseTemplate(input: string): TemplateLiteral</code>
+
+    Parses the specified template cell source code (such as the contents of a Markdown or SQL cell), returning the resulting AST as a `TemplateLiteral`. (This method is called internally by `transpile`.)
+  </script>
+  <script id="22" type="text/markdown">
+    #### <code class="language-ts">transpile(input: string, mode: Cell[\"mode\"], options?: TranspileOptions): TranspiledJavaScript</code>
+
+    Transpiles the specified cell source code, given the cell's `mode`. The transpiled source is returned as a `body` function suitable for use with [`variable.define`](https://github.com/observablehq/runtime/blob/main/README.md#variabledefinename-inputs-definition) from the Observable Runtime, along with any named `inputs` (unbound references) and `outputs` (top-level declarations).
+  </script>
+  <script id="23" type="text/markdown">
+    #### <code class="language-ts">transpileJavaScript(input: string, options?: TranspileOptions): TranspiledJavaScript</code>
+
+    Transpiles the specified JavaScript cell source code. The transpiled source is returned as a `body` function suitable for use with [`variable.define`](https://github.com/observablehq/runtime/blob/main/README.md#variabledefinename-inputs-definition) from the Observable Runtime, along with any named `inputs` (unbound references) and `outputs` (top-level declarations).
+  </script>
+  <script id="21" type="text/markdown">
+    #### <code class="language-ts">transpileTemplate(input: string, tag = \"\", raw = false): string</code>
+
+    Transpiles the specified template cell source code (such as the contents of a Markdown or SQL cell), returning the corresponding JavaScript source code consisting of a single template literal expression; the given `tag` is the source code of the template literal tag, if any (such as `md` for Markdown), and the given `raw` flag indicates whether the template literal is raw. (This method is called internally by `transpile`, and the result is passed to `transpileJavaScript`.)
+  </script>
+  <script id="45" type="text/markdown">
+    ### Utility API
+
+    These utility methods define default values, allowing shorthand.
+  </script>
+  <script id="24" type="text/markdown">
+    #### <code class="language-ts">toNotebook(spec: NotebookSpec): Notebook</code>
+
+    Given a `NotebookSpec`, returns the corresponding `Notebook`, populating any default values.
+  </script>
+  <script id="25" type="text/markdown">
+    #### <code class="language-ts">toCell(spec: CellSpec): Cell</code>
+
+    Given a `CellSpec`, returns the corresponding `Cell`, populating any default values.
+  </script>
+  <script id="26" type="text/markdown">
+    #### <code class="language-ts">defaultPinned(mode: Cell[\"mode\"]): boolean</code>
+
+    Returns the default `pinned` value for the given cell `mode`.
+  </script>
+  <script id="15" type="text/markdown">
+    ### Runtime API
+
+    The Runtime API provides some additional logic on top of the [Observable Runtime](https://github.com/observablehq/runtime) to run the notebook, allowing cells to be redefined at runtime, and implementing the notebook standard library, including the `display` and `view` functions which are scoped per-cell.
+  </script>
+  <script id="28" type="text/markdown">
+    #### <code class="language-ts">define(state: DefineState, definition: Definition, observe?: () => Observer): void</code>
+
+    Defines a cell, given the specified `state` (including the `root` in which to display the cell's output, and recording any secondary `variables` defined by the cell) and `definition` (including the cell's `id`, `body`, `inputs`, `outputs`, _etc._). An `observe` function may be specified to override the default [variable observer](https://github.com/observablehq/runtime/blob/main/README.md#modulevariableobserver), which is used to render the cell's contents.
+  </script>
+  <script id="29" type="text/markdown">
+    #### <code class="language-ts">display(state: DisplayState, value: unknown): void</code>
+
+    Displays a cell's value (into the `root` given by the specified `state`). (This method is used internally when you call `display` from a cell.)
+  </script>
+  <script id="30" type="text/markdown">
+    #### <code class="language-ts">clear(state: DisplayState): void</code>
+
+    Clears a cell's output (from the `root` given by the specified `state`). (This method is used internally to clear the display when a cell is invalidated.)
+  </script>
+  <script id="31" type="text/markdown">
+    #### <code class="language-ts">observe(state: DisplayState, id: number, autodisplay?: boolean): void</code>
+
+    Returns the default [variable observer](https://github.com/observablehq/runtime/blob/main/README.md#modulevariableobserver) used to render the cell's contents.
+  </script>
+  <script id="32" type="text/markdown">
+    #### <code class="language-ts">inspect(value: unknown, expanded?: number[][]): HTMLDivElement</code>
+
+    Returns the rendered inspector for the given `value`. This is a small wrapper on top of the [Observable Inspector](https://github.com/observablehq/inspector)'s `inspector.fulfilled` which re-expands collapsible elements when they are re-rendered.
+  </script>
+  <script id="33" type="text/markdown">
+    #### <code class="language-ts">inspectError(value: unknown): HTMLDivElement</code>
+
+    Returns the rendered inspector for the given error `value`. This is a small wrapper on top of the [Observable Inspector](https://github.com/observablehq/inspector)'s `inspector.rejected`.
+  </script>
+  <script id="34" type="text/markdown">
+    #### <code class="language-ts">getExpanded(node: Node): number[][] | undefined</code>
+
+    Given an inspector node previously rendered by `inspect(…)`, returns the list of paths that have been expanded by the user; passing these to a subsequent call to `inspect(…)` will re-expand the same set of paths after re-rendering.
+  </script>
+  <script id="35" type="text/markdown">
+    #### <code class="language-ts">root: HTMLElement</code>
+
+    Returns the root element into which cells are rendered. This is the first <code class="language-html">&lt;main&gt;</code> element, if it exists, and otherwise the <code class="language-html">&lt;body&gt;</code>.
+  </script>
+  <script id="38" type="text/markdown">
+    #### <code class="language-ts">runtime: Runtime</code>
+
+    The Observable Runtime instance.
+  </script>
+  <script id="39" type="text/markdown">
+    #### <code class="language-ts">main: Module</code>
+
+    The main runtime module.
+  </script>
+  <script id="36" type="text/markdown">
+    #### <code class="language-ts">library: Record<string, unknown></code>
+
+    The built-ins provided to the runtime; the notebook standard library. This object includes the definitions for various built-ins, such as `now`, `width`, `Generators`, and `Mutable`.
+  </script>
+  <script id="3" type="text/markdown">
+    <style>
+
+    .observablehq--cell:first-of-type {
+      position: relative;
+      color: var(--theme-background);
+      padding-bottom: 5rem;
+    }
+
+    .observablehq--cell:first-of-type h1 {
+      color: inherit;
+    }
+
+    .observablehq--cell:first-of-type h1 + h2 {
+      color: inherit;
+      font-style: normal;
+      font-weight: 500;
+      opacity: 0.7;
+      margin-top: 1rem;
+    }
+
+    .observablehq--cell:first-of-type::before {
+      content: "";
+      display: block;
+      position: absolute;
+      background: var(--theme-foreground);
+      inset: 0;
+      width: 100vw;
+      margin: -68px calc((100% - 100vw) / 2) 2rem;
+      z-index: -1;
+    }
+
+    h1 {
+      color: var(--theme-foreground);
+      font-size: clamp(3rem, 8vw, 4rem);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: var(--sans-serif);
+    }
+
+    aside {
+      font: small var(--sans-serif);
+      color: var(--theme-foreground-muted);
+      max-width: 640px;
+    }
+
+    aside code {
+      font-size: inherit;
+    }
+
+    @media (min-width: calc(640px + 17rem)) {
+      aside {
+        float: right;
+        width: 12rem;
+      }
+    }
+
+    </style>
+  </script>
+</notebook>

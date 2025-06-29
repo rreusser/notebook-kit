@@ -5,7 +5,7 @@
 @import url("./highlight.css");
 @import url("./plot.css");
 
-.observablehq--cell {
+.observablehq--cell:empty {
   min-height: 0;
 }
 
