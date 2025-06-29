@@ -10,7 +10,7 @@ import {Sourcemap} from "../javascript/sourcemap.js";
 import {transpile} from "../javascript/transpile.js";
 import {parseTemplate} from "../javascript/template.js";
 import {highlight} from "../runtime/stdlib/highlight.js";
-import {md} from "../runtime/stdlib/md.js";
+import {MarkdownRenderer} from "../runtime/stdlib/md.js";
 
 export function observable({
   window = new JSDOM().window,
@@ -35,6 +35,7 @@ export function observable({
         const tsource = await readFile(template, "utf-8");
         const document = parser.parseFromString(tsource, "text/html");
         const statics = new Set<Cell>();
+        const md = MarkdownRenderer({document});
 
         const version = (await import("../../package.json", {with: {type: "json"}})).default.version;
         let generator = document.querySelector("meta[name=generator]");
@@ -54,10 +55,12 @@ export function observable({
           div.id = `cell-${id}`;
           div.className = "observablehq observablehq--cell";
           if (mode === "md") {
-            md.document = document;
             const template = parseTemplate(value);
             if (!template.expressions.length) statics.add(cell);
-            div.appendChild(md([stripExpressions(template, value)]));
+            const content = md([stripExpressions(template, value)]);
+            const codes = content.querySelectorAll<HTMLElement>("code[class^=language-]");
+            await Promise.all(Array.from(codes, highlight));
+            div.appendChild(content);
           } else if (mode === "html") {
             const template = parseTemplate(value);
             if (!template.expressions.length) statics.add(cell);

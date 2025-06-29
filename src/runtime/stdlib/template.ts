@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export type TemplateRenderer = (template: readonly string[], ...values: any[]) => Node;
-export type RawTemplateRenderer = (template: {raw: readonly string[]}, ...values: any[]) => Node;
-export type AsyncRawTemplateRenderer = (template: {raw: readonly string[]}, ...values: any[]) => Promise<Node>;
+export type TemplateRenderer<T = Node> = (template: readonly string[], ...values: any[]) => T;
+export type RawTemplateRenderer<T = Node> = (template: {raw: readonly string[]}, ...values: any[]) => T;
+export type AsyncRawTemplateRenderer<T = Node> = (template: {raw: readonly string[]}, ...values: any[]) => Promise<T>;
