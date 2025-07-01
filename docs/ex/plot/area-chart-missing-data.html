@@ -19,7 +19,7 @@
   <script id="8" type="module" pinned="">
     const aapl = FileAttachment("data/AAPL.csv")
       .csv({typed: true})
-      .then((aapl) => aapl.map(d => ({...d, Close: d.Date.getUTCMonth() < 3 ? NaN : d.Close}))) // simulate gaps
+      .then((aapl) => aapl.map((d) => ({...d, Close: d.Date.getUTCMonth() < 3 ? NaN : d.Close}))) // simulate gaps
       .then(display);
   </script>
 </notebook>

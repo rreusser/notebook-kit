@@ -4,7 +4,7 @@ import {html} from "https://cdn.jsdelivr.net/npm/htl/+esm";
 // Copyright 2019–2020 Observable, Inc.
 // https://observablehq.com/@mbostock/scrubber
 export function Scrubber(values, {
-  format = value => value,
+  format = (value) => value,
   initial = 0,
   direction = 1,
   delay = null,
@@ -56,7 +56,7 @@ export function Scrubber(values, {
     form.i.valueAsNumber = (form.i.valueAsNumber + direction + values.length) % values.length;
     form.i.dispatchEvent(new CustomEvent("input", {bubbles: true}));
   }
-  form.i.oninput = event => {
+  form.i.oninput = (event) => {
     if (event && event.isTrusted && running()) stop();
     form.value = values[form.i.valueAsNumber];
     form.o.value = format(form.value, form.i.valueAsNumber, values);

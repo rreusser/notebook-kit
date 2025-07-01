@@ -56,7 +56,7 @@
     })();
 
     function interpolateProjection(raw0, raw1) {
-      const mutate = d3.geoProjectionMutator(t => (x, y) => {
+      const mutate = d3.geoProjectionMutator((t) => (x, y) => {
         const [x0, y0] = raw0(x, y), [x1, y1] = raw1(x, y);
         return [x0 + t * (x1 - x0), y0 + t * (y1 - y0)];
       });

@@ -90,7 +90,7 @@
 
     function groupTicks(d, step) {
       const k = (d.endAngle - d.startAngle) / d.value;
-      return d3.range(0, d.value, step).map(value => {
+      return d3.range(0, d.value, step).map((value) => {
         return {value: value, angle: value * k + d.startAngle};
       });
     }

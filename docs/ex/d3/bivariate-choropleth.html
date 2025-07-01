@@ -124,6 +124,6 @@
   </script>
   <script id="379" type="module" pinned="">
     const us = await FileAttachment("data/us-counties-albers-10m.json").json();
-    const states = display(new Map(us.objects.states.geometries.map(d => [d.id, d.properties])));
+    const states = display(new Map(us.objects.states.geometries.map((d) => [d.id, d.properties])));
   </script>
 </notebook>

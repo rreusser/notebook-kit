@@ -24,8 +24,8 @@
   </script>
   <script id="30" type="application/vnd.observable.javascript" pinned="">
     chart = {
-      const root = d3.hierarchy(data, d => d.branchset)
-          .sum(d => d.branchset ? 0 : 1)
+      const root = d3.hierarchy(data, (d) => d.branchset)
+          .sum((d) => d.branchset ? 0 : 1)
           .sort((a, b) => (a.value - b.value) || d3.ascending(a.data.length, b.data.length));
 
       cluster(root);
@@ -62,7 +62,7 @@
           .attr("stroke", "#000")
           .attr("stroke-opacity", 0.25)
         .selectAll("path")
-        .data(root.links().filter(d => !d.target.children))
+        .data(root.links().filter((d) => !d.target.children))
         .join("path")
           .each(function(d) { d.target.linkExtensionNode = this; })
           .attr("d", linkExtensionConstant);
@@ -75,16 +75,16 @@
         .join("path")
           .each(function(d) { d.target.linkNode = this; })
           .attr("d", linkConstant)
-          .attr("stroke", d => d.target.color);
+          .attr("stroke", (d) => d.target.color);
 
       svg.append("g")
         .selectAll("text")
         .data(root.leaves())
         .join("text")
           .attr("dy", ".31em")
-          .attr("transform", d => `rotate(${d.x - 90}) translate(${innerRadius + 4},0)${d.x < 180 ? "" : " rotate(180)"}`)
-          .attr("text-anchor", d => d.x < 180 ? "start" : "end")
-          .text(d => d.data.name.replace(/_/g, " "))
+          .attr("transform", (d) => `rotate(${d.x - 90}) translate(${innerRadius + 4},0)${d.x < 180 ? "" : " rotate(180)"}`)
+          .attr("text-anchor", (d) => d.x < 180 ? "start" : "end")
+          .text((d) => d.data.name.replace(/_/g, " "))
           .on("mouseover", mouseovered(true))
           .on("mouseout", mouseovered(false));
 
@@ -129,7 +129,7 @@
     // Set the radius of each node by recursively summing and scaling the distance from the root.
     function setRadius(d, y0, k) {
       d.radius = (y0 += d.data.length) * k;
-      if (d.children) d.children.forEach(d => setRadius(d, y0, k));
+      if (d.children) d.children.forEach((d) => setRadius(d, y0, k));
     }
   </script>
   <script id="61" type="application/vnd.observable.javascript" pinned="">
@@ -172,7 +172,7 @@
     }
   </script>
   <script id="92" type="application/vnd.observable.javascript" pinned="">
-    legend = svg => {
+    legend = (svg) => {
       const g = svg
         .selectAll("g")
         .data(color.domain())
@@ -188,7 +188,7 @@
           .attr("x", 24)
           .attr("y", 9)
           .attr("dy", "0.35em")
-          .text(d => d);
+          .text((d) => d);
     }
   </script>
   <script id="38" type="application/vnd.observable.javascript" pinned="">

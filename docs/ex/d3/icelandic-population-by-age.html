@@ -84,17 +84,17 @@
           .duration(delay);
 
       rect = rect
-        .data(data.filter(d => d.year === year), (d) => `${d.sex}:${d.year - d.age}`)
+        .data(data.filter((d) => d.year === year), (d) => `${d.sex}:${d.year - d.age}`)
         .join(
-          enter => enter.append("rect")
+          (enter) => enter.append("rect")
             .style("mix-blend-mode", "darken")
             .attr("fill", (d) => color(d.sex))
             .attr("x", (d) => x(d.age) + dx)
             .attr("y", (d) => y(0))
             .attr("width", x.bandwidth() + 1)
             .attr("height", 0),
-          update => update,
-          exit => exit.call(rect => rect.transition(t).remove()
+          (update) => update,
+          (exit) => exit.call((rect) => rect.transition(t).remove()
             .attr("y", y(0))
             .attr("height", 0))
         );

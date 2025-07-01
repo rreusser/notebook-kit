@@ -139,8 +139,8 @@
         : greek_letter === null ? `
     ${nominative[constellation]}` : `
     ${greek_letter
-        .replace(/[a-z]+/g, w => letters[w])
-        .replace(/\d/g, c => "⁰¹²³⁴⁵⁶⁷⁸⁹"[c])} ${genitive[constellation]}`}`;
+        .replace(/[a-z]+/g, (w) => letters[w])
+        .replace(/\d/g, (c) => "⁰¹²³⁴⁵⁶⁷⁸⁹"[c])} ${genitive[constellation]}`}`;
     }
 
     display(svg.node());

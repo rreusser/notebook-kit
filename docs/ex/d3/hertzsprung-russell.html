@@ -47,7 +47,7 @@
     // Create the axes.
     svg.append("g")
         .attr("transform", `translate(${marginLeft},0)`)
-        .call(d3.axisLeft(d3.scaleLog(y.domain().map(m => Math.pow(10, 4.83 - m)), y.range())));
+        .call(d3.axisLeft(d3.scaleLog(y.domain().map((m) => Math.pow(10, 4.83 - m)), y.range())));
 
     svg.append("g")
         .attr("transform", `translate(${width - marginRight},0)`)
@@ -117,7 +117,7 @@
           : bv < 1.5 ? (t = (bv - 0.4) / 1.1, 1 - (0.47 * t) + (0.1 * t * t))
           : bv < 1.94 ? (t = (bv - 1.5) / 0.44, 0.63 - (0.6 * t * t))
           : 0
-      ].map(t => Math.round(t * 255).toString(16).padStart(2, "0")).join("")}`;
+      ].map((t) => Math.round(t * 255).toString(16).padStart(2, "0")).join("")}`;
     }
 
     function temperature(color) {

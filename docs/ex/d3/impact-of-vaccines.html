@@ -86,7 +86,7 @@
           .attr("transform", `translate(0,${height - marginBottom + 4})`)
           .call(d3.axisBottom(x)
               .tickValues([year])
-              .tickFormat(x => x)
+              .tickFormat((x) => x)
               .tickSize(marginTop + marginBottom - height - 10))
           .call((g) => g.select(".tick text")
               .clone()

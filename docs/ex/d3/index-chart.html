@@ -67,7 +67,7 @@
     svg.append("g")
         .attr("transform", `translate(${marginLeft},0)`)
         .call(d3.axisLeft(y)
-            .ticks(null, x => +x.toFixed(6) + "×"))
+            .ticks(null, (x) => +x.toFixed(6) + "×"))
         .call((g) => g.selectAll(".tick line").clone()
             .attr("stroke-opacity", (d) => d === 1 ? null : 0.2)
             .attr("x2", width - marginLeft - marginRight))

@@ -80,7 +80,7 @@
       });
       const root = d3.hierarchy(rootData);
       const nodeById = new Map(root.leaves().map((d) => [id(d), d]));
-      for (const d of root.leaves()) d.incoming = [], d.outgoing = d.data.imports.map(i => [d, nodeById.get(i)]);
+      for (const d of root.leaves()) d.incoming = [], d.outgoing = d.data.imports.map((i) => [d, nodeById.get(i)]);
       for (const d of root.leaves()) for (const o of d.outgoing) o[1].incoming.push(o);
       root.sort((a, b) => d3.ascending(a.height, b.height) || d3.ascending(a.data.name, b.data.name));
       return root;

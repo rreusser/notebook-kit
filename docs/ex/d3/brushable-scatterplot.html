@@ -81,7 +81,7 @@
         const [[x0, y0], [x1, y1]] = s;
         value = dot
           .style("stroke", "gray")
-          .filter(d => x0 <= x(d["Miles_per_Gallon"]) && x(d["Miles_per_Gallon"]) < x1
+          .filter((d) => x0 <= x(d["Miles_per_Gallon"]) && x(d["Miles_per_Gallon"]) < x1
                   && y0 <= y(d["Horsepower"]) && y(d["Horsepower"]) < y1)
           .style("stroke", "steelblue")
           .data();

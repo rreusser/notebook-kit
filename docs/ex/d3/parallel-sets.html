@@ -99,7 +99,7 @@
       const prefix = keys.slice(0, i + 1);
       const linkByKey = new d3.InternMap([], JSON.stringify);
       for (const d of data) {
-        const names = prefix.map(k => d[k]);
+        const names = prefix.map((k) => d[k]);
         const value = d.value || 1;
         let link = linkByKey.get(names);
         if (link) { link.value += value; continue; }

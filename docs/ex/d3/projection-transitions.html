@@ -63,7 +63,7 @@
     function interpolateProjection(raw0, raw1) {
       const {scale: scale0, translate: translate0} = fit(raw0);
       const {scale: scale1, translate: translate1} = fit(raw1);
-      return t => d3.geoProjection((x, y) => lerp2(raw0(x, y), raw1(x, y), t))
+      return (t) => d3.geoProjection((x, y) => lerp2(raw0(x, y), raw1(x, y), t))
         .scale(lerp1(scale0, scale1, t))
         .translate(lerp2(translate0, translate1, t))
         .precision(0.1);
@@ -183,7 +183,7 @@
   </script>
   <script id="5" type="application/vnd.observable.javascript" pinned="">
     function projectionInput({name = "", value} = {}) {
-      const form = html`<form><select name=i>${projections.map(p => {
+      const form = html`<form><select name=i>${projections.map((p) => {
         return Object.assign(html`<option>`, {
           textContent: p.name,
           selected: p.name === value
