@@ -89,5 +89,11 @@
         © 2025 Observable, Inc.
       </div>
     </footer>
+    <script type="module">
+      if (location.origin === "https://observablehq.com") {
+        const {pageLoad} = await import("https://events.observablehq.com/client.js");
+        pageLoad();
+      }
+    </script>
   </body>
 </html>
