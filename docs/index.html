@@ -3,6 +3,44 @@
   <title>Observable Notebooks&nbsp;2.0 Technology Preview</title>
   <script id="2" type="text/markdown">
     # Observable Notebooks 2.0 <span style="color: var(--theme-foreground-faint);">Technology Preview</span>
+
+    <link rel="stylesheet" href="./style.css">
+
+    <style>
+
+    .previews {
+      display: grid;
+      grid-gap: 0.875rem;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 5fr));
+      font: 14px/normal var(--sans-serif);
+      color: var(--theme-foreground);
+    }
+
+    .previews a {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: start;
+      width: 100%;
+      color: inherit;
+    }
+
+    .preview-image {
+      border: solid 1px #e8e8e8;
+      border-radius: 4px;
+      box-sizing: border-box;
+      width: 100%;
+      padding-top: 62.5%;
+      background-size: cover;
+    }
+
+    .preview-title {
+      width: 100%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    </style>
   </script>
   <script id="22" type="text/markdown">
     The **future of notebooks** 📓🔮 is here. We're building the next generation of Observable Notebooks, and we're excited to share a technology preview that you can start using today. 🚀
@@ -223,7 +261,7 @@
     </a>
   </script>
   <script id="81" type="text/markdown">
-    Observable Desktop requires Apple Silicon and macOS 15+ (Sequoia). By downloading and using Observable Desktop, you agree to our [terms of service](https://observablehq.com/terms-of-service). An Observable account is required.
+    Observable Desktop currently requires macOS 15+ and Apple Silicon. By downloading and using Observable Desktop, you agree to our [terms of service](https://observablehq.com/terms-of-service). An Observable account is required.
   </script>
   <script id="58" type="text/markdown">
     Here's a short demo of authoring notebooks:
@@ -231,7 +269,7 @@
     <div style="border: solid 1px currentColor; max-width: 100%; width: 640px; display: flex; justify-content: center; align-items: center; aspect-ratio: 640 / 315; font: 14px var(--sans-serif);">VIDEO TK</div>
   </script>
   <script id="80" type="text/markdown">
-    See the [Desktop documentation](./desktop) for more.
+    See the [Desktop user guide](./desktop-guide) for help getting started.
   </script>
   <script id="4" type="text/markdown">
     ---
@@ -533,102 +571,5 @@
   </script>
   <script id="69" type="text/markdown">
     If you build something with Notebooks 2.0, we'd also love to see it! This page is [hosted on GitHub](https://github.com/observablehq/notebook-kit/blob/main/docs/index.html), and we'd love to feature your work in the gallery above.
-  </script>
-  <script id="1" type="text/html">
-    <style>
-
-    .observablehq--cell:first-of-type {
-      position: relative;
-      color: var(--theme-background);
-      padding-bottom: 5rem;
-    }
-
-    .observablehq--cell:first-of-type h1 {
-      color: inherit;
-    }
-
-    .observablehq--cell:first-of-type h1 + h2 {
-      color: inherit;
-      font-style: normal;
-      font-weight: 500;
-      opacity: 0.7;
-      margin-top: 1rem;
-    }
-
-    .observablehq--cell:first-of-type::before {
-      content: "";
-      display: block;
-      position: absolute;
-      background: var(--theme-foreground);
-      inset: 0;
-      width: 100vw;
-      margin: -68px calc((100% - 100vw) / 2) 2rem;
-      z-index: -1;
-    }
-
-    h1 {
-      color: var(--theme-foreground);
-      font-size: clamp(3rem, 8vw, 4rem);
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      font-family: var(--sans-serif);
-    }
-
-    aside {
-      font: small var(--sans-serif);
-      color: var(--theme-foreground-muted);
-      max-width: 640px;
-    }
-
-    aside code {
-      font-size: inherit;
-    }
-
-    @media (min-width: calc(640px + 17rem)) {
-      aside {
-        float: right;
-        width: 12rem;
-      }
-    }
-
-    .previews {
-      display: grid;
-      grid-gap: 0.875rem;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 5fr));
-      font: 14px/normal var(--sans-serif);
-      color: var(--theme-foreground);
-    }
-
-    .previews a {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: start;
-      width: 100%;
-      color: inherit;
-    }
-
-    .preview-image {
-      border: solid 1px #e8e8e8;
-      border-radius: 4px;
-      box-sizing: border-box;
-      width: 100%;
-      padding-top: 62.5%;
-      background-size: cover;
-    }
-
-    .preview-title {
-      width: 100%;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-
-    </style>
   </script>
 </notebook>

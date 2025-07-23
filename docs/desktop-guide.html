@@ -1,0 +1,154 @@
+<!doctype html>
+<notebook theme="slate">
+  <title>Observable Desktop User guide</title>
+  <script id="1" type="text/markdown">
+    # Observable Desktop <span style="color: var(--theme-foreground-faint);">User guide</span>
+
+    <link rel="stylesheet" href="./style.css">
+  </script>
+  <script id="3" type="text/markdown">
+    ---
+
+    ## Installing
+
+    Observable Desktop currently requires macOS 15+ and Apple Silicon.
+
+    <figure>
+      <img src="./videos/install.webp" loading="lazy">
+      <figcaption>Installing Observable Desktop</figcaption>
+    </figure>
+
+    1. [Download](https://releases-desktop.observablehq.com/Observable_Desktop_1.0.darwin-aarch64.dmg) and then open the disk image (`.dmg`)
+    1. Copy **Observable Desktop** to your **Applications** folder
+    1. Double-click to open the application
+  </script>
+  <script id="4" type="text/markdown">
+    ---
+
+    ## Signing in
+
+    Observable Desktop requires an Observable account. If you don't already have one, you can create one when you sign in.
+
+    <figure>
+      <img src="./videos/sign-in.webp" loading="lazy">
+      <figcaption>Signing in to Observable Desktop.</figcaption>
+    </figure>
+
+    1. Open **Observable Desktop**, then click **Open browser**
+    1. If needed, **sign in** to your Observable account
+    1. Under **Authorize your device**, click **Continue**, then **Authorize**
+    1. Close the **Success** window to return to Observable Desktop
+    1. Wait a few seconds for Observable Desktop to sign-in
+  </script>
+  <script id="6" type="text/markdown">
+    ---
+
+    ## Creating or opening notebooks
+
+    Notebooks are stored as local `.html` files. New notebooks are not saved until you save them, but subsequent edits are saved automatically.
+
+    <figure>
+      <img src="./videos/new-save.webp" loading="lazy">
+      <figcaption>Creating and saving a new notebook</figcaption>
+    </figure>
+
+    1. Choose **File** > **New** ${formatKeys("Mod-N")} to open a new, blank notebook
+    1. Make any edits, as desired
+    1. Choose **File** > **Save** ${formatKeys("Mod-S")} to save your notebook
+  </script>
+  <script id="7" type="text/markdown">
+    <figure>
+      <img src="./videos/open.webp" loading="lazy">
+      <figcaption>Opening an existing notebook</figcaption>
+    </figure>
+
+    1. Choose **File** > **Open** ${formatKeys("Mod-O")} to open a notebook
+  </script>
+  <script id="2" type="text/markdown">
+    ---
+
+    ## Opening and closing cells
+
+    Notebooks are comprised of small programs, or _cells_, which can be written in Markdown, HTML, JavaScript, and other languages. A cell's source code is visible below the cell's output if the cell is pinned or focused.
+
+    <figure>
+      <img src="./videos/open-mouse.webp" loading="lazy">
+      <figcaption>Opening and closing a cell by clicking the left gutter</figcaption>
+    </figure>
+
+    1. Click the **left gutter** to focus the cell
+    2. Edit the cell as desired
+    3. Click the **left gutter** to blur the cell
+
+    <figure>
+      <img src="./videos/open-keyboard.webp" loading="lazy">
+      <figcaption>Opening and closing a cell using keyboard shortcuts</figcaption>
+    </figure>
+
+    1. **Enter** to selection-focus the cell, then **Enter** again to focus it
+    2. Edit the cell as desired
+    3. **Esc** to selection-focus the cell, then **Esc** again to blur it
+  </script>
+  <script id="17" type="text/markdown">
+    ---
+
+    ## Inserting and deleting cells
+
+    You can split existing cells or merge them together. You can also insert new, blank JavaScript cells. You can delete cells after selecting them. Empty cells are deleted automatically on blur.
+
+    <figure>
+      <img src="./videos/split-merge.webp" loading="lazy">
+      <figcaption>Splitting and merging cells with ${formatKeys("Alt-Enter")}, ${formatKeys("Alt-Backspace")} or ${formatKeys("Shift-Alt-Enter")}, ${formatKeys("Ctrl-Alt-d")}</figcaption>
+    </figure>
+
+    <figure>
+      <img src="./videos/insert.webp" loading="lazy">
+      <figcaption>Inserting JavaScript cells with ${formatKeys("Mod-Enter")} or ${formatKeys("Shift-Mod-Enter")}</figcaption>
+    </figure>
+
+    <figure>
+      <img src="./videos/delete.webp" loading="lazy">
+      <figcaption>Delete cells with ${formatKeys("Escape")}, ${formatKeys("d")}</figcaption>
+    </figure>
+  </script>
+  <script id="5" type="text/markdown">
+    ---
+
+    ## Running cells
+
+    You can run cells while editing. If you edit a cell, it will also run automatically when blurred.
+
+    <figure>
+      <img src="./videos/run-mouse.webp" loading="lazy">
+      <figcaption>Running a cell by clicking the play button</figcaption>
+    </figure>
+
+    <figure>
+      <img src="./videos/run-keyboard.webp" loading="lazy">
+      <figcaption>Running a cell by with ${formatKeys("Shift-Enter")}</figcaption>
+    </figure>
+
+  </script>
+  <script id="12" type="text/markdown">
+    ---
+
+    ## Navigating between cells
+
+    There are a variety of keyboard shortcuts for fast navigation between cells.
+
+    <figure>
+      <img src="./videos/navigate-tab.webp" loading="lazy">
+      <figcaption>Navigating between cells with ${formatKeys("Alt-Tab")} and ${formatKeys("Shift-Alt-Tab")}</figcaption>
+    </figure>
+
+    <figure>
+      <img src="./videos/navigate-esc.webp" loading="lazy">
+      <figcaption>Navigating between cells with ${formatKeys("Escape")}, ${formatKeys("j")} or ${formatKeys("k")}, ${formatKeys("Enter")}</figcaption>
+    </figure>
+  </script>
+  <script id="11" type="module">
+    import {formatKeys} from "./keys.js";
+
+    display(document.createTextNode("\xa0"));
+  </script>
+</notebook>

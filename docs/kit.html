@@ -3,6 +3,8 @@
   <title>Observable Notebook Kit</title>
   <script id="1" type="text/markdown">
     # Observable Notebook Kit
+
+    <link rel="stylesheet" href="./style.css">
   </script>
   <script id="4" type="text/markdown">
     **Observable Notebook Kit** is an [open-source command-line tool](https://github.com/observablehq/notebook-kit) for building static sites from Observable Notebooks based on an open file format. Notebook Kit also includes a Vite plugin and a low-level JavaScript interface for deep integration of Observable Notebooks with custom web applications.
@@ -205,70 +207,5 @@
     #### <code class="language-ts">library: Record<string, unknown></code>
 
     The built-ins provided to the runtime; the notebook standard library. This object includes the definitions for various built-ins, such as `now`, `width`, `Generators`, and `Mutable`.
-  </script>
-  <script id="3" type="text/markdown">
-    <style>
-
-    .observablehq--cell:first-of-type {
-      position: relative;
-      color: var(--theme-background);
-      padding-bottom: 5rem;
-    }
-
-    .observablehq--cell:first-of-type h1 {
-      color: inherit;
-    }
-
-    .observablehq--cell:first-of-type h1 + h2 {
-      color: inherit;
-      font-style: normal;
-      font-weight: 500;
-      opacity: 0.7;
-      margin-top: 1rem;
-    }
-
-    .observablehq--cell:first-of-type::before {
-      content: "";
-      display: block;
-      position: absolute;
-      background: var(--theme-foreground);
-      inset: 0;
-      width: 100vw;
-      margin: -68px calc((100% - 100vw) / 2) 2rem;
-      z-index: -1;
-    }
-
-    h1 {
-      color: var(--theme-foreground);
-      font-size: clamp(3rem, 8vw, 4rem);
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      font-family: var(--sans-serif);
-    }
-
-    aside {
-      font: small var(--sans-serif);
-      color: var(--theme-foreground-muted);
-      max-width: 640px;
-    }
-
-    aside code {
-      font-size: inherit;
-    }
-
-    @media (min-width: calc(640px + 17rem)) {
-      aside {
-        float: right;
-        width: 12rem;
-      }
-    }
-
-    </style>
   </script>
 </notebook>
