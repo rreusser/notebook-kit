@@ -12,12 +12,23 @@ import {parseTemplate} from "../javascript/template.js";
 import {highlight} from "../runtime/stdlib/highlight.js";
 import {MarkdownRenderer} from "../runtime/stdlib/md.js";
 
+export interface ObservableOptions {
+  /** The global window, for the default parser and serializer implementations. */
+  window?: Pick<typeof globalThis, "DOMParser" | "XMLSerializer">;
+  /** The parser implementation; defaults to `new window.DOMParser()`. */
+  parser?: DOMParser;
+  /** The serializer implementation; defaults to `new window.XMLSerializer()`. */
+  serializer?: XMLSerializer;
+  /** The path to the page template; defaults to the default template. */
+  template?: string;
+}
+
 export function observable({
   window = new JSDOM().window,
   parser = new window.DOMParser(),
   serializer = new window.XMLSerializer(),
   template = fileURLToPath(import.meta.resolve("../templates/default.html"))
-} = {}): PluginOption {
+}: ObservableOptions = {}): PluginOption {
   return {
     name: "observable",
     buildStart() {
@@ -37,7 +48,7 @@ export function observable({
         const statics = new Set<Cell>();
         const md = MarkdownRenderer({document});
 
-        const version = (await import("../../package.json", {with: {type: "json"}})).default.version;
+        const {version} = (await import("../../package.json", {with: {type: "json"}})).default;
         let generator = document.querySelector("meta[name=generator]");
         generator ??= document.head.appendChild(document.createElement("meta"));
         generator.setAttribute("name", "generator");
