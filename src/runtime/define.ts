@@ -7,7 +7,7 @@ import {Mutator} from "./stdlib/mutable.js";
 
 export type DefineState = DisplayState & {
   /** the runtime variables associated with this cell */
-  variables: Variable[]
+  variables: Variable[];
 };
 
 export type Definition = {
@@ -27,12 +27,14 @@ export type Definition = {
   autoview?: boolean;
   /** whether this cell’s singular output is a mutable */
   automutable?: boolean;
+  /** an asset mapping to apply to any autodisplayed assets (e.g., images and videos) */
+  assets?: Map<string, string>;
 };
 
 export function define(state: DefineState, definition: Definition, observer = observe): void {
   const {id, body, inputs = [], outputs = [], output, autodisplay, autoview, automutable} = definition;
   const variables = state.variables;
-  const v = main.variable(observer(state, id, autodisplay), {shadow: {}});
+  const v = main.variable(observer(state, definition), {shadow: {}});
   const vid = output ?? (outputs.length ? `cell ${id}` : null);
   if (inputs.includes("display") || inputs.includes("view")) {
     let displayVersion = -1; // the variable._version of currently-displayed values

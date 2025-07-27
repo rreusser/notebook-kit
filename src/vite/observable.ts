@@ -9,6 +9,7 @@ import {deserialize} from "../lib/serialize.js";
 import {Sourcemap} from "../javascript/sourcemap.js";
 import {transpile} from "../javascript/transpile.js";
 import {parseTemplate} from "../javascript/template.js";
+import {collectAssets} from "../runtime/stdlib/assets.js";
 import {highlight} from "../runtime/stdlib/highlight.js";
 import {MarkdownRenderer} from "../runtime/stdlib/md.js";
 
@@ -46,6 +47,7 @@ export function observable({
         const tsource = await readFile(template, "utf-8");
         const document = parser.parseFromString(tsource, "text/html");
         const statics = new Set<Cell>();
+        const assets = new Set<string>();
         const md = MarkdownRenderer({document});
 
         const {version} = (await import("../../package.json", {with: {type: "json"}})).default;
@@ -77,6 +79,7 @@ export function observable({
             if (!template.expressions.length) statics.add(cell);
             div.innerHTML = stripExpressions(template, value);
           }
+          collectAssets(assets, div);
           if (pinned) {
             const pre = cells.appendChild(document.createElement("pre"));
             const code = pre.appendChild(document.createElement("code"));
@@ -94,7 +97,22 @@ export function observable({
           `<style type="text/css">
 @import url("observable:styles/theme-${notebook.theme}.css");
 </style><script type="module">
-import {define} from "observable:runtime/define";
+import {define} from "observable:runtime/define";${Array.from(assets)
+            .map(
+              (asset, i) => `
+import asset${i + 1} from ${JSON.stringify(`${asset}?url`)};`
+            )
+            .join("")}${
+  assets.size > 0
+    ? `
+
+const assets = new Map([
+${Array.from(assets)
+  .map((asset, i) => `  [${JSON.stringify(asset)}, asset${i + 1}]`)
+  .join(",\n")}
+]);`
+    : ""
+}
 ${notebook.cells
   .filter((cell) => !statics.has(cell))
   .map((cell) => {
@@ -112,6 +130,7 @@ define(
     inputs: ${JSON.stringify(transpiled.inputs)},
     outputs: ${JSON.stringify(transpiled.outputs)},
     output: ${JSON.stringify(transpiled.output)},
+    assets: ${assets.size > 0 ? "assets" : "undefined"},
     autodisplay: ${transpiled.autodisplay},
     autoview: ${transpiled.autoview},
     automutable: ${transpiled.automutable}

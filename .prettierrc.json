@@ -1,5 +1,6 @@
 {
   "bracketSpacing": false,
+  "embeddedLanguageFormatting": "off",
   "trailingComma": "none",
   "printWidth": 100
 }

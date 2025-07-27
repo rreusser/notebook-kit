@@ -1,4 +1,6 @@
+import type {Definition} from "./define.js";
 import {inspect, inspectError, getExpanded} from "./inspect.js";
+import {mapAssets} from "./stdlib/assets.js";
 
 export type DisplayState = {
   /** the HTML element in which to render this cell’s display */
@@ -44,7 +46,7 @@ export function clear(state: DisplayState): void {
   while (state.root.lastChild) state.root.lastChild.remove();
 }
 
-export function observe(state: DisplayState, _id: number, autodisplay?: boolean) {
+export function observe(state: DisplayState, {autodisplay, assets}: Definition) {
   return {
     _error: false,
     _node: state.root, // _node for visibility promise
@@ -57,6 +59,7 @@ export function observe(state: DisplayState, _id: number, autodisplay?: boolean)
     fulfilled(value: unknown) {
       if (autodisplay) {
         clear(state);
+        if (assets && value instanceof Element) mapAssets(value, assets);
         display(state, value);
       }
     },
