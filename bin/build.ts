@@ -23,7 +23,7 @@ export default async function run(args?: string[]): Promise<void> {
       },
       base: {
         type: "string",
-        default: "/"
+        default: "./"
       },
       template: {
         type: "string"
@@ -44,7 +44,7 @@ export default async function run(args?: string[]): Promise<void> {
   --root <dir>             path to the root directory; defaults to cwd
   --template <path>        path to the HTML template
   -o, --out <dir>          path to the output directory (relative to root)
-  --base <path>            serving base path; defaults to /
+  --base <path>            serving base path; defaults to ./
   --empty                  whether to empty the output directory before building
   -h, --help               show this message
 `);

@@ -7,6 +7,7 @@ const __dirname = dirname(__filename);
 
 export function config(): UserConfig {
   return {
+    base: "./",
     esbuild: {
       supported: {
         "top-level-await": true
