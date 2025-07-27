@@ -163,10 +163,47 @@ function stripExpressions(template: TemplateLiteral, input: string): string {
   const source = new Sourcemap(input);
   let index = template.start;
   for (const q of template.quasis) {
-    if (q.start > index) source.delete(index, q.start);
+    if (q.start > index) {
+      // In a case such as <img src=${…} style=…>, we must replace the
+      // placeholder with a non-empty value or it will change the interpre-
+      // tation of the subsequent attribute to be part of the src attribute!
+      // But we also don’t want to use a non-empty src attribute because that
+      // would cause the browser to load an asset that does not exist (before
+      // it is replaced by the client-generated content).
+      if (hasPrecedingEquals(input, index)) {
+        source.replaceLeft(index, q.start, '""');
+      } else {
+        source.delete(index, q.start);
+      }
+    }
     index = q.end;
   }
   return String(source);
+}
+
+/** Returns true if the specified character is preceded by an equals sign, ignoring whitespace. */
+function hasPrecedingEquals(input: string, index: number): boolean {
+  let i = index - 1;
+  while (isSpaceCode(input.charCodeAt(i))) --i;
+  return input.charCodeAt(i) === CODE_EQ;
+}
+
+const CODE_TAB = 9,
+  CODE_LF = 10,
+  CODE_FF = 12,
+  CODE_CR = 13,
+  CODE_SPACE = 32,
+  CODE_EQ = 61;
+
+/** Returns true if the specified character code is considered whitespace by HTML. */
+function isSpaceCode(code: number): boolean {
+  return (
+    code === CODE_TAB ||
+    code === CODE_LF ||
+    code === CODE_FF ||
+    code === CODE_SPACE ||
+    code === CODE_CR
+  );
 }
 
 /** Note: only suitable for use in a script element. */
