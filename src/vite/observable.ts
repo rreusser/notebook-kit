@@ -1,5 +1,6 @@
+import {existsSync} from "node:fs";
 import {readFile} from "node:fs/promises";
-import {resolve} from "node:path";
+import {dirname, join, resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 import type {TemplateLiteral} from "acorn";
 import {JSDOM} from "jsdom";
@@ -42,7 +43,7 @@ export function observable({
     },
     transformIndexHtml: {
       order: "pre",
-      async handler(input) {
+      async handler(input, context) {
         const notebook = deserialize(input, {parser});
         const tsource = await readFile(template, "utf-8");
         const document = parser.parseFromString(tsource, "text/html");
@@ -89,6 +90,9 @@ export function observable({
           }
         }
 
+        // Don’t error if assets are missing (matching Vite’s behavior).
+        filterMissingAssets(assets, dirname(context.filename));
+
         const output = serializer.serializeToString(document);
         const i = output.indexOf("</body>");
         if (!(i >= 0)) throw new Error("body not found");
@@ -103,16 +107,16 @@ import {define} from "observable:runtime/define";${Array.from(assets)
 import asset${i + 1} from ${JSON.stringify(`${asset}?url`)};`
             )
             .join("")}${
-  assets.size > 0
-    ? `
+            assets.size > 0
+              ? `
 
 const assets = new Map([
 ${Array.from(assets)
   .map((asset, i) => `  [${JSON.stringify(asset)}, asset${i + 1}]`)
   .join(",\n")}
 ]);`
-    : ""
-}
+              : ""
+          }
 ${notebook.cells
   .filter((cell) => !statics.has(cell))
   .map((cell) => {
@@ -146,11 +150,20 @@ define(
   };
 }
 
+function filterMissingAssets(assets: Set<string>, dir: string): void {
+  for (const asset of assets) {
+    if (!existsSync(join(dir, asset))) {
+      console.warn(`warning: asset not found: ${asset}`);
+      assets.delete(asset);
+    }
+  }
+}
+
 function stripExpressions(template: TemplateLiteral, input: string): string {
   const source = new Sourcemap(input);
   let index = template.start;
   for (const q of template.quasis) {
-    if (q.start > index) source.replaceLeft(index, q.start, "…");
+    if (q.start > index) source.delete(index, q.start);
     index = q.end;
   }
   return String(source);

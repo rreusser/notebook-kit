@@ -84,10 +84,11 @@ function isImportPath(specifier: string): boolean {
 
 /**
  * Returns true if the specified source (such as an img element src attribute)
- * is a path; this is anything that doesn’t start with a protocol or a hash.
+ * is a path; this is anything that is not empty and does not start with a
+ * protocol or a hash.
  */
 function isSourcePath(specifier: string): boolean {
-  return !/^(\w+:|#)/.test(specifier);
+  return asPath(specifier) ? !/^(\w+:|#)/.test(specifier) : false;
 }
 
 /** Parses the specified srcset attribute, returning the array of sources. */
