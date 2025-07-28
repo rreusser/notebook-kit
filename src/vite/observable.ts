@@ -212,10 +212,3 @@ function isSpaceCode(code: number): boolean {
 function escapeScript(script: string): string {
   return script.replace(/<\/script>/g, "<\\/script>"); // TODO handle other contexts
 }
-
-function getLanguage(code: Element): string | undefined {
-  return [...code.classList]
-    .find((c) => c.startsWith("language-"))
-    ?.slice("language-".length)
-    ?.toLowerCase();
-}
