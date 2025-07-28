@@ -10,7 +10,7 @@
     **Observable Notebook Kit** is an [open-source command-line tool](https://github.com/observablehq/notebook-kit) for building static sites from Observable Notebooks based on an open file format. Notebook Kit also includes a Vite plugin and a low-level JavaScript interface for deep integration of Observable Notebooks with custom web applications.
   </script>
   <script id="43" type="text/markdown">
-    Notebook Kit is available as part of [**Notebooks 2.0 Technology Preview**](./), which includes **Observable Desktop**, a notebook editor for macOS.
+    Notebook Kit is available as part of [**Notebooks 2.0 Technology Preview**](./), which includes **Observable Desktop**, a macOS application for editing notebooks.
   </script>
   <script id="46" type="text/markdown">
     For more on authoring notebooks, see the [Notebooks system guide](./system-guide).
@@ -27,6 +27,178 @@
     ```
 
     Notebook Kit requires [Node.js](https://nodejs.org/en) 20.19+ or 22.12+.
+  </script>
+  <script id="47" type="text/markdown">
+    ---
+
+    ## The notebook file format
+
+    The notebook file format is intended to be simple, human-readable, and human-editable. It's based on HTML, which means you get nice editing affordances in today's text editors without needing special plugins. In addition, it's easy to review diffs when storing notebooks in source control, to search, to find-and-replace, and countless other workflows.
+  </script>
+  <script id="48" type="text/markdown">
+    <aside>While you can edit notebook HTML directly, we recommend installing <a href="./desktop">Observable Desktop</a> to author notebooks.</aside>
+
+    A notebook HTML file consists of:
+
+    - a <code class="language-html">&lt;notebook&gt;</code> root element,
+    - an optional <code class="language-html">&lt;title&gt;</code> element, and
+    - one <code class="language-html">&lt;script&gt;</code> element per cell.
+  </script>
+  <script id="50" type="text/markdown">
+    Here's a simple "hello world" notebook to demonstrate:
+
+    ```html
+    <!doctype html>
+    <notebook>
+      <title>Hello, world!</title>
+      <script id="1" type="text/markdown">
+        # Hello, world!
+      <\/script>
+      <script id="2" type="module" pinned>
+        1 + 2
+      <\/script>
+    </notebook>
+    ```
+  </script>
+  <script id="60" type="text/markdown">
+    The cell <code class="language-html">&lt;script&gt;</code> element should use four spaces of indentation for each line; these four leading spaces will be trimmed when parsing the notebook. (In the future, we'll likely make this contextual to allow more or less indentation.)
+  </script>
+  <script id="49" type="text/markdown">
+    The `type` attribute determines each cell's mode, which can be one of:
+
+    - `module` - JavaScript
+    - `text/markdown` - Markdown
+    - `text/html` - HTML
+    - `application/sql` - SQL
+    - `application/x-tex` - ${tex`\TeX`}
+    - `text/vnd.graphviz` - DOT (Graphviz)
+    - `application/vnd.observable.javascript` - Observable JavaScript
+
+    Here's an example of each supported cell type.
+  </script>
+  <script id="59" type="text/markdown">
+    A JavaScript (`module`) cell:
+
+    ```html
+    <script type="module">
+      1 + 2
+    <\/script>
+    ```
+  </script>
+  <script id="52" type="text/markdown">
+    A Markdown (`text/markdown`) cell:
+
+    ```html
+    <script type="text/markdown">
+      # Hello, world!
+    <\/script>
+    ```
+  </script>
+  <script id="61" type="text/markdown">
+    An HTML (`text/html`) cell:
+
+    ```html
+    <script type="text/html">
+      <h1>Hello, <i>world</i>!</h1>
+    <\/script>
+    ```
+  </script>
+  <script id="62" type="text/markdown">
+    A SQL (`application/sql`) cell:
+
+    ```html
+    <script type="application/sql">
+      SELECT * FROM customers
+    <\/script>
+    ```
+  </script>
+  <script id="63" type="text/markdown">
+    A ${tex`\TeX`} (`application/x-tex`) cell:
+
+    ```html
+    <script type="application/x-tex">
+      \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+    <\/script>
+    ```
+  </script>
+  <script id="65" type="text/markdown">
+    A DOT (`text/vnd.graphviz`) cell:
+
+    ```html
+    <script type="text/vnd.graphviz">
+      digraph G {
+        A -> B -> C;
+        A -> C;
+      }
+    <\/script>
+    ```
+  </script>
+  <script id="66" type="text/markdown">
+    An Observable JavaScript (`application/vnd.observable.javascript`) cell:
+
+    ```html
+    <script type="application/vnd.observable.javascript">
+      foo = 42
+    <\/script>
+    ```
+  </script>
+  <script id="51" type="text/markdown">
+    The `pinned` attribute determines whether to show the cell's source code; it defaults to true for JavaScript cells, and false for all other cells. Cells can also have an `id` attribute to indicate a unique (positive integer) identifier; an `id` isn't required, but gives cells a stable identity for editing.
+  </script>
+  <script id="53" type="text/markdown">
+    Since each cell is specified as a <code class="language-html">&lt;script&gt;</code> element, if the cell source code contains a `<\/script>`, it must be escaped with a backslash as `<\\/script>`. Likewise, a sequence of backslashes in this context must be escaped with an additional backslash, such as `<\\\/script>`.
+  </script>
+  <script id="57" type="text/markdown">
+    The `notebook` element `theme` attribute specifies the theme; and may have one of the following values:
+
+    - `air` (default)
+    - `coffee`
+    - `cotton`
+    - `deep-space`
+    - `glacier`
+    - `ink`
+    - `midnight`
+    - `near-midnight`
+    - `ocean-floor`
+    - `parchment`
+    - `slate`
+    - `stark`
+    - `sun-faded`
+
+    See [Observable Framework's themes](https://observablehq.com/framework/themes) for a visual overview of themes. More themes may be added in the future, and custom themes can be designed using standard stylesheets.
+  </script>
+  <script id="56" type="text/markdown">
+    See [`notebook.ts`](https://github.com/observablehq/notebook-kit/blob/main/src/lib/notebook.ts) for TypeScript types representing notebooks and cells.
+  </script>
+  <script id="70" type="text/markdown">
+    ---
+
+    ## The page template format
+
+    Notebook Kit supports custom page templates when previewing and building notebooks. Page templates can provide additional chrome around the notebook, such as a header and footer. A page template HTML file can contain whatever you like. Notebook Kit will insert or modify the following elements:
+
+    - <code class="language-html">&lt;meta name=\"generator\"&gt;</code> - Notebook Kit version and attribution
+    - <code class="language-html">&lt;title&gt;</code> - a title suffix, appearing after the notebook title
+    - <code class="language-html">&lt;main&gt;</code> - where to render the notebook cells
+  </script>
+  <script id="69" type="text/markdown">
+    The [default template](https://github.com/observablehq/notebook-kit/blob/main/src/templates/default.html) looks something like this:
+
+    ```html
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+          @import url("observable:styles/index.css");
+        </style>
+      </head>
+      <body>
+        <main></main>
+      </body>
+    </html>
+    ```
   </script>
   <script id="8" type="text/markdown">
     ---
@@ -172,7 +344,7 @@
     Clears a cell's output (from the `root` given by the specified `state`). (This method is used internally to clear the display when a cell is invalidated.)
   </script>
   <script id="31" type="text/markdown">
-    #### <code class="language-ts">observe(state: DisplayState, id: number, autodisplay?: boolean): void</code>
+    #### <code class="language-ts">observe(state: DisplayState, definition: Definition): void</code>
 
     Returns the default [variable observer](https://github.com/observablehq/runtime/blob/main/README.md#modulevariableobserver) used to render the cell's contents.
   </script>

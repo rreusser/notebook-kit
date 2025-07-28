@@ -55,7 +55,7 @@ export function observable({
         let generator = document.querySelector("meta[name=generator]");
         generator ??= document.head.appendChild(document.createElement("meta"));
         generator.setAttribute("name", "generator");
-        generator.setAttribute("content", `Observable Notebooks v${version}`);
+        generator.setAttribute("content", `Observable Notebook Kit v${version}`);
 
         let title = document.querySelector("title");
         title ??= document.head.appendChild(document.createElement("title"));
