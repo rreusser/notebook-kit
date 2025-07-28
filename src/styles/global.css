@@ -88,6 +88,11 @@ h6 code {
   font-size: 88.235294117%; /* from 17px to 15px */
 }
 
+h2[id] a[href],
+h3[id] a[href] {
+  color: inherit;
+}
+
 pre {
   line-height: 1.5;
 }

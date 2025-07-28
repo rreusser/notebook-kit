@@ -1,7 +1,15 @@
+import slugify from "@sindresorhus/slugify";
 import MarkdownIt from "markdown-it";
+import MarkdownItAnchor from "markdown-it-anchor";
 import type {TemplateRenderer} from "./template.js";
 
 const mi = MarkdownIt({html: true, linkify: true, typographer: true});
+
+mi.use(MarkdownItAnchor, {
+  level: [2, 3],
+  slugify: (s) => slugify(s),
+  permalink: MarkdownItAnchor.permalink.headerLink({class: ""})
+});
 
 export function MarkdownRenderer({
   document = window.document

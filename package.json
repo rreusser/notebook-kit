@@ -54,9 +54,11 @@
     "@observablehq/inspector": "^5.0.1",
     "@observablehq/parser": "^6.1.0",
     "@observablehq/runtime": "^6.0.0",
+    "@sindresorhus/slugify": "^2.2.1",
     "acorn": "^8.15.0",
     "acorn-walk": "^8.3.4",
     "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
     "vite": "^7.0.0"
   },
   "devDependencies": {
