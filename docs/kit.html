@@ -22,7 +22,7 @@
 
     You can install Notebook Kit from [npm](https://www.npmjs.com/package/@observablehq/notebook-kit):
 
-    ```bash
+    ```sh
     npm install @observablehq/notebook-kit
     ```
 
@@ -51,17 +51,17 @@
     <!doctype html>
     <notebook>
       <title>Hello, world!</title>
-      <script id="1" type="text/markdown">
+      <script type="text/markdown">
         # Hello, world!
       <\/script>
-      <script id="2" type="module" pinned>
+      <script type="module" pinned>
         1 + 2
       <\/script>
     </notebook>
     ```
   </script>
   <script id="60" type="text/markdown">
-    The cell <code class="language-html">&lt;script&gt;</code> element should use four spaces of indentation for each line; these four leading spaces will be trimmed when parsing the notebook. (In the future, we'll likely make this contextual to allow more or less indentation.)
+    The cell <code class="language-html">&lt;script&gt;</code> element should use four spaces of indentation for each line; these four leading spaces are trimmed when parsing the notebook. (In the future, we'll likely make this contextual to allow varied indentation.)
   </script>
   <script id="49" type="text/markdown">
     The `type` attribute determines each cell's mode, which can be one of:
@@ -165,7 +165,7 @@
     - `stark`
     - `sun-faded`
 
-    See [Observable Framework's themes](https://observablehq.com/framework/themes) for a visual overview of themes. More themes may be added in the future, and custom themes can be designed using standard stylesheets.
+    See [Observable Framework's themes](https://observablehq.com/framework/themes) for a visual overview. More themes may be added in the future, and custom themes can be applied using standard stylesheets.
   </script>
   <script id="56" type="text/markdown">
     See [`notebook.ts`](https://github.com/observablehq/notebook-kit/blob/main/src/lib/notebook.ts) for TypeScript types representing notebooks and cells.

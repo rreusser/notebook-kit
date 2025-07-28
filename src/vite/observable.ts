@@ -89,13 +89,6 @@ export function observable({
             code.textContent = value;
             await highlight(code);
           }
-          for (const pre of contents.querySelectorAll("pre")) {
-            const child = pre.firstElementChild;
-            if (child?.tagName !== "CODE") continue;
-            const language = getLanguage(child);
-            if (!language) continue;
-            pre.dataset.language = language;
-          }
           cells.appendChild(contents);
         }
 

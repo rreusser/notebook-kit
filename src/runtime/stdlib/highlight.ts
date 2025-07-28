@@ -20,7 +20,13 @@ export const highlighter = tagHighlighter([
 ]);
 
 export async function highlight(code: HTMLElement): Promise<void> {
-  const parser = await getParser(code);
+  const language = getLanguage(code);
+  if (!language) return;
+
+  const parent = code.parentElement;
+  if (parent) parent.dataset.language = language;
+
+  const parser = await getParser(language);
   if (!parser) return;
 
   const document = code.ownerDocument;
@@ -46,15 +52,12 @@ export async function highlight(code: HTMLElement): Promise<void> {
   highlightCode(text, tree, highlighter, emit, emitBreak);
 }
 
-async function getParser(code: HTMLElement): Promise<Parser | undefined> {
-  const dialect = getLanguage(code);
-  switch (dialect) {
+async function getParser(language: string): Promise<Parser | undefined> {
+  switch (language) {
     case "js":
     case "ts":
     case "jsx":
-    case "javascript":
-    case "typescript":
-      return (await import("@lezer/javascript")).parser.configure({dialect});
+      return (await import("@lezer/javascript")).parser.configure({dialect: language});
     case "html":
       return (await import("@lezer/html")).parser;
     case "css":
@@ -66,8 +69,15 @@ async function getParser(code: HTMLElement): Promise<Parser | undefined> {
 }
 
 function getLanguage(code: HTMLElement): string | undefined {
-  return [...code.classList]
+  const language = [...code.classList]
     .find((c) => c.startsWith("language-"))
     ?.slice("language-".length)
     ?.toLowerCase();
+  switch (language) {
+    case "javascript":
+      return "js";
+    case "typescript":
+      return "ts";
+  }
+  return language;
 }
