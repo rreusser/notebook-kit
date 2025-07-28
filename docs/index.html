@@ -109,18 +109,6 @@
     - an optional <code class="language-html">&lt;title&gt;</code> element, and
     - one <code class="language-html">&lt;script&gt;</code> element per cell.
   </script>
-  <script id="35" type="text/markdown">
-    The `type` attribute determines a cell's mode, which can be one of:
-
-    - `module` - JavaScript
-    - `text/markdown` - Markdown
-    - `text/html` - HTML
-    - `application/sql` - SQL
-    - `application/x-tex` - ${tex`\TeX`}
-    - `text/vnd.graphviz` - DOT (Graphviz)
-    - `application/vnd.observable.javascript` - Observable JavaScript
-    - … and more coming soon
-  </script>
   <script id="13" type="text/markdown">
     Here's a simple "hello world" notebook to demonstrate:
 
@@ -137,8 +125,8 @@
     </notebook>
     ```
   </script>
-  <script id="36" type="text/markdown">
-    Cells can also have an `id` attribute to indicate a unique (positive integer) identifier; an `id` isn't required, but gives cells a stable identity for editing. Lastly the cell's `pinned` attribute specifies whether to show the cell's source code.
+  <script id="82" type="text/markdown">
+    See the [Notebook Kit documentation](./kit) for more on the notebook file format.
   </script>
   <script id="6" type="text/markdown">
     ### Vanilla JavaScript
@@ -146,22 +134,13 @@
     You no longer have to learn a nonstandard dialect, [Observable JavaScript](https://observablehq.com/@observablehq/observable-javascript~0), to use Observable Notebooks; they're now vanilla JavaScript. This also makes it easier to reuse code between notebooks and other web applications.
   </script>
   <script id="40" type="text/markdown">
-    If you don't know Observable JavaScript, this change will be largely invisible --- JavaScript will "just work" like you expect. But if you're familiar with past notebooks, here are some highlights of vanilla syntax:
+    <aside>Notebooks 2.0 supports an Observable JavaScript cell mode for backwards compatibility, so you can migrate to vanilla JavaScript at your own pace.</aside>
 
-    - You can declare top-level variables in cells with standard <code class="language-js">const</code> and <code class="language-js">let</code>, and cells can now expose as many top-level variables as they want (rather than being limited to one).
-    - You can display content with the <code class="language-js">display(…)</code> function, and cells can display multiple things (rather than being limited to one thing), even over time (a bit like <code class="language-js">console.log</code>).
-    - You can define reactive inputs with the <code class="language-js">view(…)</code> function, and cells can have multiple reactive inputs (rather than being limited to one).
-    - You can import libraries from npm (and JSR, and the web) with standard static <code class="language-js">import</code> declarations (rather than being limited to dynamic imports and `require`).
-    - You can import (vanilla) local JavaScript modules into your notebook.
-  </script>
-  <script id="76" type="text/markdown">
-    Here's a quick example computing the Fibonacci numbers ${tex`F_n < 100`}:
-  </script>
-  <script id="75" type="module" pinned="">
-    for (let a = 0, b = 1; a < 100; [a, b] = [b, a + b]) display(a);
-  </script>
-  <script id="55" type="text/markdown">
-    For backwards compatibility, Notebooks 2.0 retain support for Observable JavaScript as a cell mode; this allows you to migrate to vanilla JavaScript incrementally and at your own pace. You can also import current notebooks into new notebooks.
+    If you don't know Observable JavaScript, this change will be largely invisible --- JavaScript will "just work" like you expect. But if you're familiar with past notebooks, here are some highlights:
+
+    - You declare top-level variables in cells with standard <code class="language-js">const</code> and <code class="language-js">let</code>, and cells can now expose as many top-level variables as they want rather than being limited to just one.
+    - You display content with the <code class="language-js">display(…)</code> function, and cells can display multiple things, even asynchronously. You likewise define reactive inputs with the <code class="language-js">view(…)</code> function, and cells can have multiple reactive inputs rather than being limited to just one.
+    - You import libraries from npm (and JSR, the web, and local modules) with standard static <code class="language-js">import</code> declarations rather than being limited to `require` and dynamic imports.
   </script>
   <script id="41" type="text/markdown">
     See the [Notebooks system guide](./system-guide) for more on JavaScript in notebooks. And see the gallery below for lots of examples.
@@ -185,12 +164,12 @@
   <script id="11" type="text/markdown">
     <aside>We still provide <code>require</code> as a built-in to improve backwards compatibility, but it’s simply a wrapper around dynamic <code class="language-js">import</code>.</aside>
 
-    Notebooks 2.0 also fully embraces JavaScript modules, removing built-in support for `require` (asynchronous module definitions) --- the now-antiquated way of loading JavaScript modules that predates <code class="language-js">import</code>. Thanks to vanilla JavaScript syntax, you can use standard static import declarations or dynamic import expressions. And you can import libraries from npm (`npm:`), JSR (`jsr:`), local modules, or remote servers.
+    Notebooks 2.0 also fully embraces JavaScript modules, removing built-in support for `require` (asynchronous module definitions) --- the now-antiquated way of loading JavaScript modules that predates <code class="language-js">import</code>. Thanks to vanilla JavaScript syntax, you can use standard static import declarations or dynamic import expressions. And you can import libraries from npm (`npm:`), JSR (`jsr:`), local modules, or remote servers. You can also import existing Observable notebooks (`observable:`).
   </script>
   <script id="12" type="text/markdown">
     ### Notebooks as static sites
 
-    When you want to share your notebooks as a static site (like the one you are currently reading), install the open-source Notebook Kit:
+    When you want to share your notebooks as a static site, install the open-source Notebook Kit:
 
     ```
     npm install @observablehq/notebook-kit
@@ -206,9 +185,6 @@
   <script id="79" type="text/markdown">
     This generates a `.observable/dist` folder containing the built site, which you can then deploy to your preferred static site hosting service, such as GitHub Pages, Vercel, or Netlify.
   </script>
-  <script id="52" type="text/markdown">
-    When we bring the next-generation notebook editor to the web, you won't need to run terminal commands to share notebooks --- you'll be able to share notebooks directly from the editor. We'll also work on making it easy to transition between local and web-based development. But we're providing this open-source tooling to give you flexibility and to enable deeper, custom notebook integrations. You should be able to do whatever you want with your notebooks.
-  </script>
   <script id="46" type="text/markdown">
     When building notebooks, we use static generation for Markdown and HTML cells: static content is statically rendered. This improves the user experience by accelerating the first contentful paint, and by reducing reflow during page load --- your page appears instantly. It's good for SEO, too, because static content is now readable by search engines without JavaScript.
   </script>
@@ -222,6 +198,9 @@
     ```
 
     See the [Notebook Kit documentation](./kit) for more.
+  </script>
+  <script id="52" type="text/markdown">
+    When we bring the next-generation notebook editor to the web, you won't need terminal commands to share notebooks --- you'll be able to share notebooks directly from the editor. We'll also work on making it easy to transition between local and web-based development. But we're providing this open-source tooling to give you flexibility and to enable deeper, custom notebook integrations. You should be able to do whatever you want with your notebooks.
   </script>
   <script id="56" type="text/markdown">
     ---
@@ -266,7 +245,7 @@
   <script id="58" type="text/markdown">
     Here's a short demo of authoring notebooks:
 
-    <iframe style="border: none; max-width: 100%; width: 640px; aspect-ratio: 560 / 315;" src="https://www.youtube.com/embed/BeH6AhiQ4Bw?si=-f-wzXSCNkddOQOz" title="Vibe coding a choropleth map in Observable Notebooks 2.0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe style="border: none; max-width: 100%; width: 960px; aspect-ratio: 560 / 315;" src="https://www.youtube.com/embed/BeH6AhiQ4Bw?si=-f-wzXSCNkddOQOz" title="Vibe coding a choropleth map in Observable Notebooks 2.0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </script>
   <script id="80" type="text/markdown">
     See the [Desktop user guide](./desktop-guide) for help getting started.
