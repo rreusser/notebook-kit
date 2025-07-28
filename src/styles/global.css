@@ -79,6 +79,20 @@ figcaption code {
   font-size: inherit;
 }
 
+pre[data-language] {
+  position: relative;
+}
+
+pre[data-language]::before {
+  content: attr(data-language);
+  float: right;
+  margin: -4px -8px -4px -4px;
+  padding: 4px;
+  font-size: 12px;
+  line-height: 21px;
+  color: var(--theme-foreground-muted);
+}
+
 h1 code,
 h2 code,
 h3 code,

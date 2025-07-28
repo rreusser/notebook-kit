@@ -5,18 +5,6 @@
     # Observable Notebooks 2.0 <span style="color: var(--theme-foreground-faint);">System guide</span>
 
     <link rel="stylesheet" href="./style.css">
-
-    <style>
-
-    figure img {
-      border-radius: 6px;
-    }
-
-    .sans {
-      font-family: var(--sans-serif);
-    }
-
-    </style>
   </script>
   <script id="38" type="text/markdown">
     <aside>This document is itself a notebook, and this paragraph is a Markdown cell.</aside>
@@ -93,7 +81,7 @@
     greeting("world")
   </script>
   <script id="19" type="module" pinned="">
-    Plot.lineY(aapl, {x: "Date", y: "Close"}).plot({y: {grid: true}})
+    Plot.lineY(AMZN, {x: "Date", y: "Close"}).plot({y: {grid: true}})
   </script>
   <script id="56" type="text/markdown">
     When a top-level variable is defined as a promise, referencing cells will implicitly await the promise and only see the resolved value.
@@ -184,12 +172,15 @@
   <script id="83" type="text/markdown">
     Use dollar-curly <code>$\{…}</code> expressions to interpolate dynamic JavaScript values into Markdown, including text, DOM nodes, and bits of dynamic Markdown.
   </script>
+  <script id="84" type="text/markdown" pinned="">
+    Hello, ${atob("d29ybGQ=")}!
+  </script>
   <script id="5" type="text/markdown">
     ---
 
     ## HTML
 
-    HTML cells are used similarly to Markdown cells, and also support dollar-curly `$\{…}` interpolation. Unlike Markdown cells, HTML cells automatically escape any interpolated values, providing additional safety when handling dynamic and user-specified content.
+    HTML cells are used similarly to Markdown cells, and also support dollar-curly <code>$\{…}</code> interpolation. Unlike Markdown cells, HTML cells automatically escape any interpolated values, providing additional safety when handling dynamic and user-specified content.
   </script>
   <script id="73" type="text/html" pinned="">
     Interpolated values are considered text, ${"not <i>HTML</i>"}.

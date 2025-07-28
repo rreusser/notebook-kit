@@ -65,7 +65,8 @@ export function observable({
         cells ??= document.body.appendChild(document.createElement("main"));
         for (const cell of notebook.cells) {
           const {id, mode, pinned, value} = cell;
-          const div = cells.appendChild(document.createElement("div"));
+          const contents = document.createDocumentFragment();
+          const div = contents.appendChild(document.createElement("div"));
           div.id = `cell-${id}`;
           div.className = "observablehq observablehq--cell";
           if (mode === "md") {
@@ -82,12 +83,20 @@ export function observable({
           }
           collectAssets(assets, div);
           if (pinned) {
-            const pre = cells.appendChild(document.createElement("pre"));
+            const pre = contents.appendChild(document.createElement("pre"));
             const code = pre.appendChild(document.createElement("code"));
             code.className = `language-${mode}`;
             code.textContent = value;
             await highlight(code);
           }
+          for (const pre of contents.querySelectorAll("pre")) {
+            const child = pre.firstElementChild;
+            if (child?.tagName !== "CODE") continue;
+            const language = getLanguage(child);
+            if (!language) continue;
+            pre.dataset.language = language;
+          }
+          cells.appendChild(contents);
         }
 
         // Don’t error if assets are missing (matching Vite’s behavior).
@@ -209,4 +218,11 @@ function isSpaceCode(code: number): boolean {
 /** Note: only suitable for use in a script element. */
 function escapeScript(script: string): string {
   return script.replace(/<\/script>/g, "<\\/script>"); // TODO handle other contexts
+}
+
+function getLanguage(code: Element): string | undefined {
+  return [...code.classList]
+    .find((c) => c.startsWith("language-"))
+    ?.slice("language-".length)
+    ?.toLowerCase();
 }
