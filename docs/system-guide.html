@@ -125,12 +125,12 @@
     Inputs.table(AMZN)
   </script>
   <script id="78" type="text/markdown">
-    To load live data, you can use `fetch`, `WebSocket`, and other standard web APIs. For JSON data, you can also use an <code class="language-js">import</code> with `type: "json"`.
+    To load live data, you can use `fetch`, `WebSocket`, and other standard web APIs.
   </script>
   <script id="82" type="module" pinned="">
-    import world from "npm:world-atlas/land-110m.json" with {type: "json"};
-
-    display(world);
+    const world = fetch("https://cdn.jsdelivr.net/npm/world-atlas/land-110m.json")
+      .then((response) => response.ok ? response.json() : Promise.reject(response.status))
+      .then(display);
   </script>
   <script id="69" type="text/markdown">
     The notebook standard library includes a handful of additional built-ins:
