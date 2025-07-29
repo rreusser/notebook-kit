@@ -4,7 +4,7 @@
   <script id="2" type="text/markdown">
     # Scatterplot tour
 
-    This notebook implements an animated tour of a scatterplot using zoom transitions. The tour zooms in on each cluster's [bounding box](https://observablehq.com/@d3/zoom-to-bounding-box) in succession before zooming back out to the overview. To improve rendering performance, the circles are drawn as zero-length strokes with round caps.
+    This notebook implements an animated tour of a scatterplot using zoom transitions. The tour zooms in on each cluster's [bounding box](./zoom-to-bounding-box) in succession before zooming back out to the overview. To improve rendering performance, the circles are drawn as zero-length strokes with round caps.
   </script>
   <script id="3" type="module">
     const input = Inputs.radio(new Map(transforms), {value: transforms[0][1]});
