@@ -207,6 +207,21 @@
 
     Notebook Kit's CLI supports three commands: `preview` for a live preview of notebooks, `build` for building a static site, and `download` for downloading Observable Notebooks as HTML.
   </script>
+  <script id="71" type="text/markdown">
+    We recommend that you install Notebook Kit locally to a project using a package manager such as npm, and then add preview and build scripts to your `package.json`.
+
+    ```json
+    {
+      "dependencies": {
+        "@observablehq/notebook-kit": "^1.0.1"
+      },
+      "scripts": {
+        "docs:preview": "notebooks preview --root docs",
+        "docs:build": "notebooks build --root docs -- docs/*.html"
+      }
+    }
+    ```
+  </script>
   <script id="9" type="text/markdown">
     ### Preview
 

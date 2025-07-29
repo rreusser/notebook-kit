@@ -175,11 +175,26 @@
     npm install @observablehq/notebook-kit
     ```
   </script>
+  <script id="83" type="text/markdown">
+    Then define a couple scripts in your `package.json`:
+
+    ```json
+    {
+      "dependencies": {
+        "@observablehq/notebook-kit": "^1.0.1"
+      },
+      "scripts": {
+        "docs:preview": "notebooks preview --root docs",
+        "docs:build": "notebooks build --root docs -- docs/*.html"
+      }
+    }
+    ```
+  </script>
   <script id="77" type="text/markdown">
     Then run the `notebooks build` command:
 
     ```sh
-    notebooks build
+    npm run docs:build
     ```
   </script>
   <script id="79" type="text/markdown">
@@ -194,7 +209,7 @@
     The `build` command is implemented on top of [Vite](https://vite.dev), making it incredibly fast. If you prefer to author notebooks in a text editor rather than using Observable Desktop, you can use Vite's preview server for a live preview as you edit.
 
     ```sh
-    notebooks preview
+    npm run docs:preview
     ```
 
     See the [Notebook Kit documentation](./kit) for more.
