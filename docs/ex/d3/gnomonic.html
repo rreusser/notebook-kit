@@ -6,7 +6,7 @@
   </script>
   <script id="1" type="module" pinned="">
     const height = Math.max(640, width);
-    const projection = d3.geoGnomonic().scale(width / 6).translate([width / 2, height / 2]).clipAngle(90);
+    const projection = d3.geoGnomonic().scale(width / 6).translate([width / 2, height / 2]).clipAngle(80);
     const outline = {type: "Sphere"};
     const graticule = d3.geoGraticule10();
     const land = topojson.feature(world, world.objects.land);
