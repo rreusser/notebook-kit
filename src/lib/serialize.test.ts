@@ -1,8 +1,18 @@
-// @vitest-environment jsdom
+import {JSDOM} from "jsdom";
 import {assert, test} from "vitest";
-import type {CellSpec} from "./notebook.js";
+import type {CellSpec, Notebook} from "./notebook.js";
 import {toNotebook} from "./notebook.js";
-import {deserialize, serialize} from "./serialize.js";
+import {deserialize as _deserialize, serialize as _serialize} from "./serialize.js";
+
+const {window} = new JSDOM();
+
+function serialize(notebook: Notebook): string {
+  return _serialize(notebook, {document: window.document});
+}
+
+function deserialize(data: string): Notebook {
+  return _deserialize(data, {parser: new window.DOMParser()});
+}
 
 test("serializes unpinned cells", () => {
   const notebook1 = toNotebook({
@@ -90,7 +100,7 @@ test("serialization escapes </script>, in various forms", () => {
       {id: 6, mode: "js", pinned: true, value: `'<\\/script>'`},
       {id: 7, mode: "js", pinned: true, value: `'<\\/script '`},
       {id: 8, mode: "js", pinned: true, value: `'<\\\\/SCRIPT '`},
-      {id: 9, mode: "js", pinned: true, value: `'<\\\\/sCrIpT '`},
+      {id: 9, mode: "js", pinned: true, value: `'<\\\\/sCrIpT '`}
     ]
   });
   const html = serialize(notebook1);
