@@ -29,21 +29,16 @@ export default async function run(args?: string[]) {
     return;
   }
 
-  const globalDocument = globalThis.document;
-  globalThis.document = new JSDOM().window.document;
-  try {
-    for (const positional of positionals) {
-      let url = new URL(positional, "https://observablehq.com");
-      if (url.origin === "https://observablehq.com") {
-        url = new URL(`/document${url.pathname.replace(/^\/d\//, "/")}`, "https://api.observablehq.com");
-      }
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`unable to fetch: ${url}`);
-      const {title, nodes} = await response.json();
-      for (const node of nodes) if (node.mode === "js") node.mode = "ojs";
-      process.stdout.write(serialize(toNotebook({title, cells: nodes})));
+  const document = new JSDOM().window.document;
+  for (const positional of positionals) {
+    let url = new URL(positional, "https://observablehq.com");
+    if (url.origin === "https://observablehq.com") {
+      url = new URL(`/document${url.pathname.replace(/^\/d\//, "/")}`, "https://api.observablehq.com");
     }
-  } finally {
-    globalThis.document = globalDocument;
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`unable to fetch: ${url}`);
+    const {title, nodes} = await response.json();
+    for (const node of nodes) if (node.mode === "js") node.mode = "ojs";
+    process.stdout.write(serialize(toNotebook({title, cells: nodes}), {document}));
   }
 }
