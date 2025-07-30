@@ -1,5 +1,5 @@
 <!doctype html>
-<notebook>
+<notebook theme="air">
   <title>Background image</title>
   <script id="1" type="text/markdown">
     # Background image
@@ -14,7 +14,7 @@
       style: {
         padding: 10,
         color: "black",
-        background: "url(data/sea-ice.jpg)",
+        background: `url(${FileAttachment("data/sea-ice.jpg").href})`,
         backgroundSize: "cover"
       },
       marks: [
