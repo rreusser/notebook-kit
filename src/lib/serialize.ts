@@ -2,7 +2,7 @@ import type {CellSpec, Cell, Notebook, NotebookTheme} from "./notebook.js";
 import {toNotebook} from "./notebook.js";
 import {isEmpty} from "./text.js";
 
-export function serialize(notebook: Notebook, {document = window.document} = {}): string {
+export function serialize(notebook: Notebook, {document = globalThis.document} = {}): string {
   const _notebook = document.createElement("notebook");
   _notebook.setAttribute("theme", notebook.theme);
   if (notebook.readOnly) _notebook.setAttribute("readonly", "");
