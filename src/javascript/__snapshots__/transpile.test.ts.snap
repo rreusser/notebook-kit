@@ -101,6 +101,68 @@ await z;
 }
 `;
 
+exports[`transpiles Observable JavaScript imports 1`] = `
+{
+  "autodisplay": false,
+  "body": "async (__ojs_runtime,__ojs_observer) => {
+const {figure, rotation, viewof$rotation} = await (import("https://api.observablehq.com/@rreusser/drawing-3d-objects-with-svg.js?v=4").then((_) => {
+  const observers = {};
+  const module = __ojs_runtime.module(_.default);
+  const main = __ojs_runtime.module();
+  if (!module.defines("figure")) throw new SyntaxError(\`export 'figure' not found\`);
+  main.variable(observers.figure = __ojs_observer()).import("figure", module);
+  if (!module.defines("rotation")) throw new SyntaxError(\`export 'rotation' not found\`);
+  main.variable(observers.rotation = __ojs_observer()).import("rotation", module);
+  if (!module.defines("viewof rotation")) throw new SyntaxError(\`export 'viewof rotation' not found\`);
+  main.variable(observers.viewof$rotation = __ojs_observer()).import("viewof rotation", module);
+  return observers;
+}));
+
+return {figure,rotation,viewof$rotation};
+}",
+  "inputs": [
+    "__ojs_runtime",
+    "__ojs_observer",
+  ],
+  "outputs": [
+    "figure",
+    "rotation",
+    "viewof$rotation",
+  ],
+}
+`;
+
+exports[`transpiles Observable JavaScript imports 2`] = `
+{
+  "autodisplay": false,
+  "body": "async (__ojs_runtime,__ojs_observer) => {
+const {figure, rotation: rot, viewof$rotation: viewof$rot} = await (import("https://api.observablehq.com/@rreusser/drawing-3d-objects-with-svg.js?v=4").then((_) => {
+  const observers = {};
+  const module = __ojs_runtime.module(_.default);
+  const main = __ojs_runtime.module();
+  if (!module.defines("figure")) throw new SyntaxError(\`export 'figure' not found\`);
+  main.variable(observers.figure = __ojs_observer()).import("figure", module);
+  if (!module.defines("rotation")) throw new SyntaxError(\`export 'rotation' not found\`);
+  main.variable(observers.rotation = __ojs_observer()).import("rotation", module);
+  if (!module.defines("viewof rotation")) throw new SyntaxError(\`export 'viewof rotation' not found\`);
+  main.variable(observers.viewof$rotation = __ojs_observer()).import("viewof rotation", module);
+  return observers;
+}));
+
+return {figure,rot,viewof$rot};
+}",
+  "inputs": [
+    "__ojs_runtime",
+    "__ojs_observer",
+  ],
+  "outputs": [
+    "figure",
+    "rot",
+    "viewof$rot",
+  ],
+}
+`;
+
 exports[`transpiles dynamic npm: imports 1`] = `
 {
   "autodisplay": false,
@@ -151,6 +213,56 @@ return (
 }",
   "inputs": [],
   "outputs": [],
+}
+`;
+
+exports[`transpiles static imports with {type: 'observable'} 1`] = `
+{
+  "autodisplay": false,
+  "body": "async (__ojs_runtime,__ojs_observer) => {
+const {Scrubber} = await (import("https://api.observablehq.com/@mbostock/scrubber.js?v=4").then((_) => {
+  const observers = {};
+  const module = __ojs_runtime.module(_.default);
+  const main = __ojs_runtime.module();
+  if (!module.defines("Scrubber")) throw new SyntaxError(\`export 'Scrubber' not found\`);
+  main.variable(observers.Scrubber = __ojs_observer()).import("Scrubber", module);
+  return observers;
+}));
+
+return {Scrubber};
+}",
+  "inputs": [
+    "__ojs_runtime",
+    "__ojs_observer",
+  ],
+  "outputs": [
+    "Scrubber",
+  ],
+}
+`;
+
+exports[`transpiles static imports with {type: 'observable'} 2`] = `
+{
+  "autodisplay": false,
+  "body": "async (__ojs_runtime,__ojs_observer) => {
+const {viewof$rotation} = await (import("https://api.observablehq.com/@rreusser/drawing-3d-objects-with-svg.js?v=4").then((_) => {
+  const observers = {};
+  const module = __ojs_runtime.module(_.default);
+  const main = __ojs_runtime.module();
+  if (!module.defines("viewof rotation")) throw new SyntaxError(\`export 'viewof rotation' not found\`);
+  main.variable(observers.viewof$rotation = __ojs_observer()).import("viewof rotation", module);
+  return observers;
+}));
+
+return {viewof$rotation};
+}",
+  "inputs": [
+    "__ojs_runtime",
+    "__ojs_observer",
+  ],
+  "outputs": [
+    "viewof$rotation",
+  ],
 }
 `;
 
@@ -220,6 +332,31 @@ return {Scrubber};
   ],
   "outputs": [
     "Scrubber",
+  ],
+}
+`;
+
+exports[`transpiles static observable: imports 2`] = `
+{
+  "autodisplay": false,
+  "body": "async (__ojs_runtime,__ojs_observer) => {
+const {viewof$rotation} = await (import("https://api.observablehq.com/@rreusser/drawing-3d-objects-with-svg.js?v=4").then((_) => {
+  const observers = {};
+  const module = __ojs_runtime.module(_.default);
+  const main = __ojs_runtime.module();
+  if (!module.defines("viewof rotation")) throw new SyntaxError(\`export 'viewof rotation' not found\`);
+  main.variable(observers.viewof$rotation = __ojs_observer()).import("viewof rotation", module);
+  return observers;
+}));
+
+return {viewof$rotation};
+}",
+  "inputs": [
+    "__ojs_runtime",
+    "__ojs_observer",
+  ],
+  "outputs": [
+    "viewof$rotation",
   ],
 }
 `;
