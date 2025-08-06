@@ -4,7 +4,7 @@ import {dirname, join, resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 import type {TemplateLiteral} from "acorn";
 import {JSDOM} from "jsdom";
-import type {PluginOption} from "vite";
+import type {PluginOption, IndexHtmlTransformContext} from "vite";
 import type {Cell} from "../lib/notebook.js";
 import {deserialize} from "../lib/serialize.js";
 import {Sourcemap} from "../javascript/sourcemap.js";
@@ -23,13 +23,16 @@ export interface ObservableOptions {
   serializer?: XMLSerializer;
   /** The path to the page template; defaults to the default template. */
   template?: string;
+  /** A function which performs a per-page transformation of the template HTML. */
+  transformTemplate?: (template: string, context: IndexHtmlTransformContext) => string | Promise<string>;
 }
 
 export function observable({
   window = new JSDOM().window,
   parser = new window.DOMParser(),
   serializer = new window.XMLSerializer(),
-  template = fileURLToPath(import.meta.resolve("../templates/default.html"))
+  template = fileURLToPath(import.meta.resolve("../templates/default.html")),
+  transformTemplate = undefined
 }: ObservableOptions = {}): PluginOption {
   return {
     name: "observable",
@@ -45,7 +48,10 @@ export function observable({
       order: "pre",
       async handler(input, context) {
         const notebook = deserialize(input, {parser});
-        const tsource = await readFile(template, "utf-8");
+        let tsource = await readFile(template, "utf-8");
+        if (transformTemplate !== undefined) {
+          tsource = await transformTemplate(tsource, context);
+        }
         const document = parser.parseFromString(tsource, "text/html");
         const statics = new Set<Cell>();
         const assets = new Set<string>();
