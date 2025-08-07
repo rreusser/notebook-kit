@@ -52,7 +52,7 @@ export function observable({
       async handler(input, context) {
         let notebook = deserialize(input, {parser});
         if (transformNotebook !== undefined) {
-          notebook = await transformNotebook(structuredClone(notebook), context);
+          notebook = await transformNotebook(notebook, context);
         }
         let tsource = await readFile(template, "utf-8");
         if (transformTemplate !== undefined) {
