@@ -26,7 +26,7 @@ export interface ObservableOptions {
   /** A function which performs a per-page transformation of the template HTML. */
   transformTemplate?: (template: string, context: IndexHtmlTransformContext) => string | Promise<string>;
   /** A function which mutates the parsed notebook. */
-  transformNotebook?: (input: Notebook, context: IndexHtmlTransformContext) => Notebook | Promise<Notebook>;
+  transformNotebook?: (notebook: Notebook, context: IndexHtmlTransformContext) => Notebook | Promise<Notebook>;
 }
 
 export function observable({
